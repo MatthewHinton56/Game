@@ -119,10 +119,8 @@ public int getDefend()
 public int getMaxHP(){return maxHP;}
 @Override
 public void play(Units u, String s) {
-	System.out.println("test");
 	if(!this.checkDead())
 	{
-	System.out.print("Test");
 	switch (s){
 	case "attack":if(!u.checkDead()) u.takeDamage(this.getDamage()-u.getDefend());
 	break;

@@ -23,6 +23,7 @@ private int place;
 			unit.set(k,unit.get(i));
 			unit.set(i, temp);
 		}
+		for(Units u: unit)System.out.println(u.getSpeed());
 		place = 0;
 	}
 	public void execute()
@@ -33,7 +34,6 @@ private int place;
 			for(int q = 0;q<unit.size();q++)System.out.println(unit.get(q).status());
 			String move = "";
 			Units u=null;
-			System.out.print(unit.get(place).getClass());
 			if(unit.get(place) instanceof Hero)
 			{
 				System.out.print("Attack or Defend:a or d: ");

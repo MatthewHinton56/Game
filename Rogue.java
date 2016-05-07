@@ -17,6 +17,7 @@ public class Rogue extends Hero {
 		if(getLvl()%2==1)spirit++;
 		else intelligence++;
 		if(getXP()>Math.pow(2, getLvl())*coefficent)super.levelUP(5, 1, spirit, 2, intelligence,1);
+		//Health,strength,spirit,speed,intelligence,defense
 	}
 }
 

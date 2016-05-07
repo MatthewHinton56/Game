@@ -16,6 +16,6 @@ public void levelUp()
 	int intelligence = 0;
 	if(getLvl()%2==0)spirit++;
 	else intelligence++;
-	if(getXP()>getLvl()*coefficent)super.levelUP(5, 2, spirit, 1, intelligence,1);
+	if(getXP()>Math.pow(2,getLvl())*coefficent)super.levelUP(5, 2, spirit, 1, intelligence,1);
 }
 }

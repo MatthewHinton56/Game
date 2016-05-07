@@ -1,7 +1,7 @@
 
 public class Hero {
 
-private int HP, lvl, XP, strength,spirit,intelligence,speed,defense;
+private int maxHP, HP, lvl, XP, strength,spirit,intelligence,speed,defense;
 private String name,type;
 private Chest chest;
 private Gloves gloves;
@@ -19,6 +19,7 @@ public Hero(int strength,int spirit,int intelligence,int speed,int defense,Strin
 	helmet=StandardItems.loinclothH;
 	pants=StandardItems.loinclothP;
 	this.HP=HP+3;
+	this.maxHP=HP+3;
 	this.lvl=1;
 	this.XP=0;
 	this.strength=strength;
@@ -48,12 +49,15 @@ public void levelUP(int HP,int strength,int spirit,int speed,int intelligence,in
 {
 	lvl++;
 	this.HP+=HP;
+	this.maxHP=HP;
 	this.strength+=strength;
 	this.spirit+=spirit;
 	this.speed+=speed;
 	this.intelligence+=intelligence;
 	this.defense+=defense;
 }
+public void takeDamage(int damage){HP-=damage;}
+public boolean checkDead(){return HP<=0;}
 public void addXP(int iXP){XP+=iXP;}
 public int getHP() {
 	return HP;

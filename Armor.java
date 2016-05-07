@@ -7,7 +7,7 @@
  */
 
 
-public class Armor {
+public abstract class Armor {
 private int HP, defense;
     public Armor(int hp, int defense) {
     	HP=hp;

@@ -7,8 +7,8 @@ public class Monk extends Hero {
 	private static final int startDefense = 3;
 	private static final int startHealth = 20;
 	public static final String type = "Monk";
-		public Monk(String name) {
-			super(startStrength, startSpirit, startIntelligence, startSpeed, startDefense, name, type, startHealth);
+		public Monk(String name,int id) {
+			super(startStrength, startSpirit, startIntelligence, startSpeed, startDefense, name, type, startHealth,id);
 		}
 	public void levelUp()
 	{

@@ -7,8 +7,8 @@ private static final int startSpeed = 2;
 private static final int startDefense = 2;
 private static final int startHealth = 25;
 public static final String type = "Warrior";
-	public Warrior(String name) {
-		super(startStrength, startSpirit, startIntelligence, startSpeed, startDefense, name, type, startHealth);
+	public Warrior(String name,int id) {
+		super(startStrength, startSpirit, startIntelligence, startSpeed, startDefense, name, type, startHealth,id);
 	}
 public void levelUp()
 {

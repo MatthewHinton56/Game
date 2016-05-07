@@ -16,3 +16,8 @@
 /BlackMage.class
 /GrayMage.class
 /Enemy.class
+/StandardEnemies.class
+/EnemyGroup.class
+/PlayerGroup.class
+/Combat.class
+/Units.class

@@ -7,8 +7,8 @@ public class WhiteMage extends Hero {
 	private static final int startDefense = 2;
 	private static final int startHealth = 20;
 	public static final String type = "White Mage";
-		public WhiteMage(String name) {
-			super(startStrength, startSpirit, startIntelligence, startSpeed, startDefense, name, type, startHealth);
+		public WhiteMage(String name,int id) {
+			super(startStrength, startSpirit, startIntelligence, startSpeed, startDefense, name, type, startHealth,id);
 		}
 	public void levelUp()
 	{

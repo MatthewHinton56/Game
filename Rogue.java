@@ -7,8 +7,8 @@ public class Rogue extends Hero {
 	private static final int startDefense = 1;
 	private static final int startHealth = 20;
 	public static final String type = "Rogue";
-		public Rogue(String name) {
-			super(startStrength, startSpirit, startIntelligence, startSpeed, startDefense, name, type, startHealth);
+		public Rogue(String name,int id) {
+			super(startStrength, startSpirit, startIntelligence, startSpeed, startDefense, name, type, startHealth,id);
 		}
 	public void levelUp()
 	{

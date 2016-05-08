@@ -9,14 +9,10 @@
 
 public class Chest extends Armor{
 
-private String name;
-    public Chest(int HP, int defense, String name) {
-    	super(HP,defense);
-    	this.name = name;
-    }
-    public String getName()
-    {
-    	return name;
+public static final String type = "Chest";
+    public Chest(int HP, int defense,int price, String name) {
+    	super(HP,defense,price,name,type);
+
     }
     
 }

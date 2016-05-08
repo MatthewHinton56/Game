@@ -1,12 +1,8 @@
 
 public class Pants extends Armor{
-	private String name;
-    public Pants(int HP, int defense, String name) {
-    	super(HP,defense);
-    	this.name = name;
-    }
-    public String getName()
-    {
-    	return name;
+	public static final String type = "Pants";
+    public Pants(int HP, int defense,int price, String name) {
+    	super(HP,defense,price,name,type);
+
     }
 }

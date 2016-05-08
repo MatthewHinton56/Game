@@ -8,13 +8,9 @@
 
 
 public class Gloves extends Armor {
-private String name;
-    public Gloves(int HP, int defense, String name) {
-    	super(HP,defense);
-    	this.name = name;
-    }
-    public String getName()
-    {
-    	return name;
+	public static final String type = "Gloves";
+    public Gloves(int HP, int defense,int price, String name) {
+    	super(HP,defense,price,name,type);
+
     }
 }

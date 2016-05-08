@@ -31,16 +31,19 @@ public Hero(int strength,int spirit,int intelligence,int speed,int defense,Strin
 	this.type=type;
 	this.name=name;
 }
-public void equipArmor(Armor a)
-{
-	if(a instanceof Chest){HP-=chest.getHP();defense-=chest.getDefense();chest=(Chest)a;HP+=chest.getHP();defense+=chest.getDefense();}
-	if(a instanceof Pants){HP-=pants.getHP();defense-=pants.getDefense();pants=(Pants)a;HP+=pants.getHP();defense+=pants.getDefense();}
-	if(a instanceof Gloves){HP-=gloves.getHP();defense-=gloves.getDefense();chest=(Chest)a;HP+=gloves.getHP();defense+=gloves.getDefense();}
-	if(a instanceof Helmet){HP-=helmet.getHP();defense-=helmet.getDefense();chest=(Chest)a;HP+=helmet.getHP();defense+=helmet.getDefense();}
+public Armor equipArmor(Armor a)
+{	Armor temp = null;
+	if(a instanceof Chest){HP-=chest.getHP();defense-=chest.getDefense();temp=(Armor)chest.clone();chest=(Chest)a;HP+=chest.getHP();defense+=chest.getDefense();}
+	if(a instanceof Pants){HP-=pants.getHP();defense-=pants.getDefense();temp=(Armor)pants.clone();pants=(Pants)a;HP+=pants.getHP();defense+=pants.getDefense();}
+	if(a instanceof Gloves){HP-=gloves.getHP();defense-=gloves.getDefense();temp=(Armor)gloves.clone();chest=(Chest)a;HP+=gloves.getHP();defense+=gloves.getDefense();}
+	if(a instanceof Helmet){HP-=helmet.getHP();defense-=helmet.getDefense();temp=(Armor)helmet.clone();chest=(Chest)a;HP+=helmet.getHP();defense+=helmet.getDefense();}
+	return temp;
 }
-public void equipWeapon(Weapon w)
+public Weapon equipWeapon(Weapon w)
 {
+	Weapon temp = (Weapon)weapon.clone();
 	weapon = w;
+	return temp;
 }
 public void setDefending(boolean d){defending = d;}
 public boolean getDefending(){return defending;}

@@ -1,3 +1,5 @@
+import info.gridworld.*;
+import info.gridworld.actor.*;
 
 public class Tester {
 
@@ -20,6 +22,8 @@ public class Tester {
 		Inventory inventory = new Inventory();
 		inventory.addItem(StandardItems.loinclothC);
 		System.out.println(inventory);
+		ActorWorld world = new ActorWorld();
+		world.show();
 	}
 
 }

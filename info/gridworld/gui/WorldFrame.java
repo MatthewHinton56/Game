@@ -350,8 +350,6 @@ public class WorldFrame<T> extends JFrame
         menuItemsDisabledDuringRun = new ArrayList<JMenuItem>();
         if(getWorldType().equals("Combat"))
         {
-        	mbar.add(menu = makeMenu("File"));
-        	newGridMenu =  makeMenu("New");
         }
         else
         {

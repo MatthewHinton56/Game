@@ -270,6 +270,20 @@ public class GUIController<T>
                 stop();
             }
         });
+        attack.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                
+            }
+        });
+        defend.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                
+            }
+        });
         speedSlider.addChangeListener(new ChangeListener()
         {
             public void stateChanged(ChangeEvent evt)

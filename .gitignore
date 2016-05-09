@@ -26,3 +26,8 @@
 /Map.class
 /MapPieces.class
 /MapPiece.class
+/Wall.class
+/Charecter.class
+/EnemySpawn.class
+/BattleGrid.class
+/World.class

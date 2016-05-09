@@ -1,6 +1,6 @@
 import info.gridworld.*;
 import info.gridworld.actor.*;
-
+import info.gridworld.grid.Location;
 public class Tester {
 
 	public static void main(String[] args) {
@@ -13,16 +13,17 @@ public class Tester {
 		Hero unit4 = new WhiteMage("Matthew",3);
 		//System.out.println(unit4.getName()+" "+unit4.getType());
 		PlayerGroup p = new PlayerGroup();
-		/*p.addHero(unit1);
+		p.addHero(unit1);
 		p.addHero(unit2);
 		p.addHero(unit3);
 		p.addHero(unit4);
-		Combat simulator =  new Combat(StandardEnemies.goblins2,p);
-		simulator.execute();*/
+		//Combat simulator =  new Combat(StandardEnemies.goblins2,p);
+		//simulator.execute();
 		Inventory inventory = new Inventory();
 		inventory.addItem(StandardItems.loinclothC);
 		System.out.println(inventory);
-		ActorWorld world = new ActorWorld();
+		ActorWorld world = new ActorWorld(new BattleGrid(p,StandardEnemies.goblins4),"Combat");
+		//world.add(new Location(1,2), new Actor());
 		world.show();
 	}
 

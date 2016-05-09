@@ -4,11 +4,13 @@ import java.util.Scanner;
 public class Combat {
 private EnemyGroup e;
 private PlayerGroup p;
+private Inventory i;
 private ArrayList<Units> unit;
 private int place;
-	public Combat(EnemyGroup e,PlayerGroup p) {
+	public Combat(EnemyGroup e,PlayerGroup p,Inventory io) {
 		this.e=e;
 		this.p=p;
+		this.i=io;
 		unit =  new ArrayList<Units>();
 		for(int i = 0;i<4;i++)unit.add(p.getHero(i));
 		for(int j = 0;j<e.size();j++)unit.add(e.getEnemy(j));
@@ -26,7 +28,7 @@ private int place;
 		for(Units u: unit)System.out.println(u.getSpeed());
 		place = 0;
 	}
-	public void execute()
+	public boolean execute()
 	{
 		Scanner in = new Scanner(System.in);
 		while(!e.checkDead() && !p.checkDead())
@@ -62,8 +64,15 @@ private int place;
 			place++;
 			if(place==6)place=0;
 		}
-		if(e.checkDead())System.out.println("You win");
-		else System.out.println("You Lose");
+		if(e.checkDead())
+			{
+			System.out.println("You win");
+			i.addGold(e.getGold());
+			int xpPerUnit = e.getXP()/4;
+			for(int i = 0;i<p.size();i++)p.getHero(i).addXP(xpPerUnit);
+			return true;
+			}
+			return false;
 	}
 
 }

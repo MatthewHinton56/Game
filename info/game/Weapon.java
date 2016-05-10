@@ -1,3 +1,4 @@
+package info.game;
 
 public class Weapon implements Inventoriable{
 private int damage,price;

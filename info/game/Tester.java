@@ -1,3 +1,4 @@
+package info.game;
 import info.gridworld.*;
 import info.gridworld.actor.*;
 import info.gridworld.grid.Location;
@@ -17,14 +18,14 @@ public class Tester {
 		p.addHero(unit2);
 		p.addHero(unit3);
 		p.addHero(unit4);
-		//Combat simulator =  new Combat(StandardEnemies.goblins2,p);
 		//simulator.execute();
 		Inventory inventory = new Inventory();
 		inventory.addItem(StandardItems.loinclothC);
 		System.out.println(inventory);
-		ActorWorld world = new ActorWorld(new BattleGrid(p,StandardEnemies.goblins4),"Combat");
+		Combat simulator =  new Combat(StandardEnemies.goblins2,p, inventory);
+		//ActorWorld world = new ActorWorld(new BattleGrid(p,StandardEnemies.goblins4),"Combat");
 		//world.add(new Location(1,2), new Actor());
-		world.show();
+		//world.show();
 	}
 
 }

@@ -1,3 +1,4 @@
+package info.game;
 
 public class Hero implements Units {
 
@@ -121,16 +122,17 @@ public int getDefend()
 }
 public int getMaxHP(){return maxHP;}
 @Override
-public void play(Units u, String s) {
+public int play(Units u, String s) {
 	if(!this.checkDead())
 	{
 	switch (s){
 	case "attack":if(!u.checkDead()) u.takeDamage(this.getDamage()-u.getDefend());
-	break;
+	return this.getDamage()-u.getDefend();
 	case "defend": this.setDefense(this.getDefend());
-	break;
+	return 0;
 	}
 	}
+	return 0;
 }
 @Override
 public void setDefense(int defense) {

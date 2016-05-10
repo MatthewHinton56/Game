@@ -1,3 +1,4 @@
+package info.game;
 
 public class Rogue extends Hero {
 	private static final int startStrength = 2;

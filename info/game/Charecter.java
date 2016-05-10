@@ -1,3 +1,4 @@
+package info.game;
 import info.gridworld.actor.Actor;
 import info.gridworld.grid.Grid;
 import info.gridworld.grid.Location;
@@ -21,7 +22,7 @@ private Inventory i;
 		if(g.get(loc) instanceof EnemySpawn)
 		{
 			Combat com = new Combat(((EnemySpawn)g.get(loc)).getEnemy(),p,i);
-			if(com.execute())super.moveTo(loc);
+			//if(com.execute())super.moveTo(loc);
 		}
 		super.moveTo(loc);
 		

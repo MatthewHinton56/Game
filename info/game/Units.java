@@ -1,3 +1,4 @@
+package info.game;
 
 public interface Units {
 	int getDamage();
@@ -7,7 +8,7 @@ public interface Units {
 	int defend();
 	boolean checkDead();
 	boolean isDefending();
-	void play(Units u, String s);
+	int play(Units u, String s);
 	void takeDamage(int damage);
 	void reset();
 	int id();

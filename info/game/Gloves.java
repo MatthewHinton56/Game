@@ -1,3 +1,4 @@
+package info.game;
 /**
  * @(#)Gloves.java
  *

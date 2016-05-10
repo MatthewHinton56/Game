@@ -1,3 +1,4 @@
+package info.game;
 import java.util.*;
 public class Inventory {
 private ArrayList<Inventoriable> inventory;

@@ -1,3 +1,4 @@
+package info.game;
 
 public class Helmet extends Armor{
 	public static final String type = "Helmet";

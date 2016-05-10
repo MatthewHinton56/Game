@@ -20,7 +20,7 @@ import info.gridworld.grid.BoundedGrid;
 import info.gridworld.grid.Grid;
 import info.gridworld.grid.Location;
 import info.gridworld.gui.WorldFrame;
-
+import info.game.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
@@ -43,7 +43,7 @@ public class World<T>
     private JFrame frame;
     private String worldType;
     private static Random generator = new Random();
-
+    private Combat c;
     private static final int DEFAULT_ROWS = 10;
     private static final int DEFAULT_COLS = 10;
 
@@ -61,6 +61,10 @@ public class World<T>
         occupantClassNames = new TreeSet<String>();
         addGridClass("info.gridworld.grid.BoundedGrid");
         addGridClass("info.gridworld.grid.UnboundedGrid");
+        if(worldType.equals("Combat"))
+        {
+        	c = ((BattleGrid)g).getCombat();
+        }
     }
 
     /**
@@ -75,6 +79,10 @@ public class World<T>
         }
         else
             frame.repaint();
+    }
+    public void close()
+    {
+    	frame.dispose();
     }
     public String getType()
     {

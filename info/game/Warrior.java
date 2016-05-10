@@ -1,3 +1,4 @@
+package info.game;
 
 public class Warrior extends Hero {
 private static final int startStrength = 4;

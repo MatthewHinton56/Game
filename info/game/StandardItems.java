@@ -1,3 +1,4 @@
+package info.game;
 
 public class StandardItems {
    public static final Chest loinclothC = new Chest(1,1,5,"Loincloth");

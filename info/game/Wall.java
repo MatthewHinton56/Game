@@ -1,3 +1,4 @@
+package info.game;
 import info.gridworld.actor.*;
 public class Wall extends Actor {
 int x,y;

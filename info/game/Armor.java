@@ -1,3 +1,4 @@
+package info.game;
 /**
  * @(#)Armor.java
  *

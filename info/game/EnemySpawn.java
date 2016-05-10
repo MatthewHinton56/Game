@@ -1,3 +1,4 @@
+package info.game;
 import info.gridworld.actor.*;
 public class EnemySpawn extends Actor{
 private EnemyGroup e;

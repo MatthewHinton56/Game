@@ -1,3 +1,4 @@
+package info.game;
 import java.util.ArrayList;
 
 public class PlayerGroup {

@@ -32,7 +32,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
-
+import info.game.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.*;
@@ -63,6 +63,7 @@ public class GUIController<T>
     private boolean running;
     private Set<Class> occupantClasses;
     private String worldType;
+    private Combat c;
     /**
      * Creates a new controller tied to the specified display and gui
      * frame.
@@ -80,6 +81,10 @@ public class GUIController<T>
         this.displayMap = displayMap;
         worldType = parent.getWorldType();
         makeControls();
+        if(worldType.equals("Combat"))
+        {
+        	c = ((CombatWorld)parent.getWorld()).getCombat();
+        }
         occupantClasses = new TreeSet<Class>(new Comparator<Class>()
         {
             public int compare(Class a, Class b)
@@ -270,25 +275,27 @@ public class GUIController<T>
                 stop();
             }
         });
+        speedSlider.addChangeListener(new ChangeListener()
+        {
+            public void stateChanged(ChangeEvent evt)
+            {
+                timer.setDelay(((JSlider) evt.getSource()).getValue());
+            }
+        });
         attack.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
-                
+                ((CombatWorld)parentFrame.getWorld()).setSelection("a");
+                parentFrame.getWorld().setMessage("Attack");
             }
         });
         defend.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
-                
-            }
-        });
-        speedSlider.addChangeListener(new ChangeListener()
-        {
-            public void stateChanged(ChangeEvent evt)
-            {
-                timer.setDelay(((JSlider) evt.getSource()).getValue());
+            	((CombatWorld)parentFrame.getWorld()).setSelection("d");
+            	parentFrame.getWorld().setMessage("Defend");
             }
         });
     }
@@ -310,7 +317,7 @@ public class GUIController<T>
         World<T> world = parentFrame.getWorld();
         Location loc = display.getCurrentLocation();
         if (loc != null && !world.locationClicked(loc))
-            editLocation();
+            //editLocation();
         parentFrame.repaint();
     }
 

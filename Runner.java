@@ -1,10 +1,7 @@
 
-import info.gridworld.actor.*;
-import info.gridworld.grid.Location;
-import info.gridworld.actor.ActorWorld;
-public class Tester {
-
-	public static void main(String[] args) {
+public class Runner {
+	public static void main(String args[])
+	{
 		Hero unit1 = new Warrior("Matthew",0);
 		//System.out.println(unit1.getName()+" "+unit1.getType());
 		Hero unit2 = new Rogue("Matthew",1);
@@ -18,15 +15,7 @@ public class Tester {
 		p.addHero(unit2);
 		p.addHero(unit3);
 		p.addHero(unit4);
-		//simulator.execute();
 		Inventory inventory = new Inventory();
-		inventory.addItem(StandardItems.loinclothC);
-		//System.out.println(inventory);
-		//Combat simulator =  new Combat(StandardEnemies.goblins2,p, inventory);
-		//new DungeonWorld(1,p,inventory);
-		//world.add(new Location(1,2) new Actor());
-		
-		new GameMaster();
+		//new DungeonWorld(1,p,inventory, new GameMaster());
 	}
-
 }

@@ -16,6 +16,8 @@ private PlayerGroup p;
 private int x,y,floorLevel;
 private DungeonGrid g;
 private Combat c;
+private GameMaster gm;
+private static final String type = "Dungeon";
 private static final Location[] doorLoc = new Location[]{new Location(3,6),new Location(9,6),new Location(15,6),
 		new Location(3,12),new Location(9,12),new Location(15,12),
 		new Location(6,3),new Location(6,9),new Location(6,15),
@@ -36,8 +38,7 @@ private static final int[][] startLoc = new int[][]{
 	{1,13},
 	{7,13},
 	{13,13}};
-private static final String type = "Dungeon";
-    public DungeonWorld(int floorLevel,PlayerGroup p,Inventory i0) {
+    public DungeonWorld(int floorLevel,PlayerGroup p,Inventory i0,GameMaster gm) {
     	this.floorLevel=floorLevel;
     	this.p=p;
     	this.i=i0;
@@ -71,8 +72,18 @@ private static final String type = "Dungeon";
 		System.setProperty("info.gridworld.gui.frametitle", "Dungeon"); // set your own title
     	show();
     }
-    
-	public String getType(){return type;}
+    public void reset(int level)
+    {
+    	this.floorLevel=level;
+    	for(int i = 0;i<19;i+=6)for(int q =0;q<19;q++){floor[i][q]=new Wall(q,i);floor[q][i]=new Wall(i,q);}
+		for(Location l:doorLoc)floor[l.getRow()][l.getCol()]=null;
+		floor[9][3]= new Character();
+		Location loc = EXITLOC[((int)(Math.random()*5))];
+		floor[loc.getRow()][loc.getCol()]=new Exit();
+		setUpRooms();
+		setFocus(3,9);	
+			x=3;y=9;
+    }
     public void setFocus(int x,int y)
     {
     	int x1 = x-3;
@@ -83,7 +94,7 @@ private static final String type = "Dungeon";
     	int y2 = y+3;
     	if(y1<0){y2-=y1;y1=0;}
     	if(y2>18){y1-=(y2-=18);y2=18;}
-    	System.out.println (""+y1+y2+x1+x2);
+    	//System.out.println (""+y1+y2+x1+x2);
     	g = new DungeonGrid(floor,x1,x2,y1,y2);
     	this.setGrid(g);
     	show();
@@ -110,7 +121,7 @@ private static final String type = "Dungeon";
         		frame.setVisible(false);
         		floor[y][x+1]=new Character();
         		floor[y][x]=null;
-        		setFocus(x,y);
+        		setFocus(x+1,y);
         		x++;
         		floor[y][x]=null;
         		Combat c = new Combat(eG,p,i,this);
@@ -119,7 +130,12 @@ private static final String type = "Dungeon";
         		
         		
         	}
-        	else if(!(floor[y][x+1] instanceof Wall)){floor[y][x]=null;x++;floor[y][x]=new Character();move(x,y);return true;}}
+        	else if(!(floor[y][x+1] instanceof Wall)){floor[y][x]=null;x++;floor[y][x]=new Character();move(x,y);return true;}
+        	if(floor[y][x+1] instanceof Exit)
+            {
+            	gm.setLevel(gm.getLevel()+1);
+            	reset(gm.getLevel());
+            }}
         if(description.equals("LEFT")||description.equals("A")){
         	if(floor[y][x-1] instanceof EnemySpawn)
         	{
@@ -127,7 +143,7 @@ private static final String type = "Dungeon";
         		frame.setVisible(false);
         		floor[y][x-1]=new Character();
         		floor[y][x]=null;
-        		setFocus(x,y);
+        		setFocus(x-1,y);
         		x--;
         		Combat c = new Combat(eG,p,i,this);
         		frame.dispose();
@@ -135,7 +151,12 @@ private static final String type = "Dungeon";
         		
         		
         	}
-        	if(!(floor[y][x-1] instanceof Wall)){floor[y][x]=null;x--;floor[y][x]=new Character();move(x,y);return true;}}
+        	if(!(floor[y][x-1] instanceof Wall)){floor[y][x]=null;x--;floor[y][x]=new Character();move(x,y);return true;}
+        	if(floor[y][x-1] instanceof Exit)
+            {
+            	gm.setLevel(gm.getLevel()+1);
+            	reset(gm.getLevel());
+            }}
         if(description.equals("DOWN")||description.equals("S")){
         	if(floor[y+1][x] instanceof EnemySpawn)
         	{
@@ -143,13 +164,19 @@ private static final String type = "Dungeon";
         		frame.setVisible(false);
         		floor[y+1][x]=new Character();
         		floor[y][x]=null;
-        		setFocus(x,y);
+        		setFocus(x,y+1);
         		y++;
         		Combat c = new Combat(eG,p,i,this);
         		frame.dispose();
         		frame.setEnabled(false);
         	}
-        	if(!(floor[y+1][x] instanceof Wall)){floor[y][x]=null;y++;floor[y][x]=new Character();move(x,y);return true;}}
+        	if(!(floor[y+1][x] instanceof Wall)){floor[y][x]=null;y++;floor[y][x]=new Character();move(x,y);return true;}
+        	if(floor[y+1][x] instanceof Exit)
+            {
+            	gm.setLevel(gm.getLevel()+1);
+            	reset(gm.getLevel());
+            }}
+        
         if(description.equals("UP")||description.equals("W")){
         	if(floor[y-1][x] instanceof EnemySpawn)
         	{
@@ -157,13 +184,18 @@ private static final String type = "Dungeon";
         		frame.setVisible(false);
         		floor[y-1][x]=new Character();
         		floor[y][x]=null;
-        		setFocus(x,y);
+        		setFocus(x,y-1);
         		y--;
         		Combat c = new Combat(eG,p,i,this);
         		frame.dispose();
         		frame.setEnabled(false);
         	}
-        	if(!(floor[y-1][x] instanceof Wall)){floor[y][x]=null;y--;floor[y][x]=new Character();move(x,y);return true;}}
+        	if(!(floor[y-1][x] instanceof Wall)){floor[y][x]=null;y--;floor[y][x]=new Character();move(x,y);return true;}
+        if(floor[y-1][x] instanceof Exit)
+        {
+        	gm.setLevel(gm.getLevel()+1);
+        	reset(gm.getLevel());
+        }}
         //if(description.equals("T")){move(3,9);return true;}
     }
         return false;
@@ -180,7 +212,7 @@ private static final String type = "Dungeon";
     			 int xD = ((int)(Math.random()*5))+i[1];
     			 int yD = ((int)(Math.random()*5))+i[0];
     			 if(floor[yD][xD]==null)
-    			 { System.out.println(""+yD+xD);
+    			 { 
     				 floor[yD][xD]= new EnemySpawn(floorLevel);
     			 }
     			}
@@ -192,6 +224,11 @@ public Actor[][] getConfig()
 {
 	return floor;
 }
+public void makeMenu()
+{
+	new Menu(p,i);
+}
+public String getType(){return type;}
 public int getX(){return x;}public int getY(){return y;}public int getLevel(){return floorLevel;}
 }
     

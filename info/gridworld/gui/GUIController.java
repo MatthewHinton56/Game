@@ -52,7 +52,7 @@ public class GUIController<T>
             + (MAX_DELAY_MSECS - MIN_DELAY_MSECS) / 2;
 
     private Timer timer;
-    private JButton stepButton, runButton, stopButton,attack,defend;
+    private JButton stepButton, runButton, stopButton,attack,defend,menu;
     private JComponent controlPanel;
     private GridPanel display;
     public WorldFrame<T> parentFrame;
@@ -178,7 +178,7 @@ public class GUIController<T>
     public void stop()
     {
         display.setToolTipsEnabled(true);
-        parentFrame.setRunMenuItemsEnabled(true);
+        //parentFrame.setRunMenuItemsEnabled(true);
         timer.stop();
         //stopButton.setEnabled(false);
        // runButton.setEnabled(true);
@@ -200,7 +200,7 @@ public class GUIController<T>
         controlPanel = new JPanel();
         attack = new JButton("Attack");
         defend = new JButton("Defend");
-        
+        menu = new JButton("Menu");
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));
         controlPanel.setBorder(BorderFactory.createEtchedBorder());
         
@@ -209,7 +209,7 @@ public class GUIController<T>
         controlPanel.add(Box.createRigidArea(spacer));
 		try
         	{
-        	 type = (String)parentFrame.getWorld().getClass().getMethod("getType",(Class<?>) null).invoke(parentFrame.getWorld());
+        	 type = parentFrame.getWorld().getType();
         	 
         	}
         	catch(Exception i){}
@@ -221,6 +221,8 @@ public class GUIController<T>
         controlPanel.add(Box.createRigidArea(spacer));
         controlPanel.add(defend);
         controlPanel.add(Box.createRigidArea(spacer));
+        controlPanel.remove(menu);
+			}
         attack.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -247,8 +249,26 @@ public class GUIController<T>
    
             }
         });
+			if(type.equals("Dungeon"))
+			{
+				parentFrame.getWorld().setMessage(type);
+		        controlPanel.add(menu);
+		        controlPanel.add(Box.createRigidArea(spacer));
+		        controlPanel.remove(attack);
+		        controlPanel.remove(defend);
+		        menu.addActionListener(new ActionListener()
+		        {
+		            public void actionPerformed(ActionEvent e)
+		            {
+		  			try
+		        	{
+		        	parentFrame.getWorld().makeMenu();
+		        	}
+		        	catch(Exception i){}
+		   
+		            }
+		        });
 			}
-	
     
         controlPanel.add(Box.createRigidArea(spacer));
     }

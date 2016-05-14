@@ -52,7 +52,7 @@ public class World<T>
         this(new BoundedGrid<T>(DEFAULT_ROWS, DEFAULT_COLS));
         message = null;
     }
-
+    public void makeMenu(){}
     public World(Grid<T> g)
     {
         gr = g;

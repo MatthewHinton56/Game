@@ -128,7 +128,7 @@ public class WorldFrame<T> extends JFrame
         ImageIcon appIcon = new ImageIcon(appIconUrl);
         setIconImage(appIcon.getImage());
         
-        makeMenus();
+        //makeMenus();
 
         JPanel content = new JPanel();
         content.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -182,7 +182,7 @@ public class WorldFrame<T> extends JFrame
         Grid<T> gr = world.getGrid();
         gridClasses.add(gr.getClass());
 
-        makeNewGridMenu();
+       // makeNewGridMenu();
 
         control = new GUIController<T>(this, display, displayMap, resources);
         content.add(control.controlPanel(), BorderLayout.SOUTH);

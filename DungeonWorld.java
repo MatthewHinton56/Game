@@ -20,6 +20,12 @@ private static final Location[] doorLoc = new Location[]{new Location(3,6),new L
 		new Location(3,12),new Location(9,12),new Location(15,12),
 		new Location(6,3),new Location(6,9),new Location(6,15),
 		new Location(12,3),new Location(12,9),new Location(12,15)};
+private static final Location[] EXITLOC = new Location[]{
+		new Location(0,9),
+		new Location(0,15),
+		new Location(9,18),
+		new Location(18,9),
+		new Location(18,15)};
 private static final int[][] startLoc = new int[][]{
 	{1,1},
 	{7,1},
@@ -40,6 +46,8 @@ private static final String type = "Dungeon";
 		for(int i = 0;i<19;i+=6)for(int q =0;q<19;q++){floor[i][q]=new Wall(q,i);floor[q][i]=new Wall(i,q);}
 		for(Location l:doorLoc)floor[l.getRow()][l.getCol()]=null;
 		floor[9][3]= new Character();
+		Location loc = EXITLOC[((int)(Math.random()*5))];
+		floor[loc.getRow()][loc.getCol()]=new Exit();
 		setUpRooms();
 		setFocus(3,9);	
 			x=3;y=9;

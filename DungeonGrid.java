@@ -15,6 +15,11 @@ public final static int CUBEDEM = 7;
     	int count1=0,count2=0;
     	for(int i = y1;i<=y2;i++){for(int k = x1;k<=x2;k++){if(a[i][k]!=null)put(new Location(count1,count2),a[i][k]);count2++;}count1++;count2=0;}
     }
-    
+    public void move(Actor[][] a,int x1,int x2,int y1,int y2)
+    {
+    	for(int q = 0;q<7;q++)for(int x = 0;x<7;x++)remove(new Location(q,x));
+    	int count1=0,count2=0;
+    	for(int i = y1;i<=y2;i++){for(int k = x1;k<=x2;k++){if(a[i][k]!=null)put(new Location(count1,count2),a[i][k]);count2++;}count1++;count2=0;}
+    }
     
 }

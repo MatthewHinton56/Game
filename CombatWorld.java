@@ -28,6 +28,24 @@ private BattleGrid g;
         //if(selection.equals("a"))((BattleGrid)g).playerMoveBack(hero);
         return true;
     }
+    public boolean keyPressed(String description,Location loc)
+    {int index = 0;
+    	switch(description)
+    	{
+    	case "1": if(g.get(g.enemyLoc[0])!=null)c.execute(selection,0);break;
+    	case "2": if(g.get(g.enemyLoc[1])!=null)c.execute(selection,1);break;
+    	case "3": if(g.get(g.enemyLoc[2])!=null)c.execute(selection,2);break;
+    	case "4": if(g.get(g.enemyLoc[3])!=null)c.execute(selection,3);break;
+    	case "5": if(g.get(g.enemyLoc[4])!=null)c.execute(selection,4);break;
+    	case "6": if(g.get(g.enemyLoc[5])!=null)c.execute(selection,5);break;
+    	case "7": if(g.get(g.enemyLoc[6])!=null)c.execute(selection,6);break;
+    	case "8": if(g.get(g.enemyLoc[7])!=null)c.execute(selection,7);break;
+    	case "9": if(g.get(g.enemyLoc[8])!=null)c.execute(selection,8);break;
+    	case "A": setSelectionA();break;
+    	case "D": setSelectionD();break;
+    	}
+    	return true;
+    }
     public void setSelectionA()
     {
     	selection="a";

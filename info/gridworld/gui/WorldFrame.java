@@ -197,6 +197,111 @@ public class WorldFrame<T> extends JFrame
         repaint(); // to show message
         display.setGrid(gr);
     }
+    public void setWorld(World<T> w ){
+    	world = w;
+    	count++;
+        resources = ResourceBundle
+                .getBundle(getClass().getName() + "Resources");
+
+        try
+        {
+            System.setProperty("sun.awt.exception.handler",
+                    GUIExceptionHandler.class.getName());
+        }
+        catch (SecurityException ex)
+        {
+            // will fail in an applet
+        }
+
+        addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent event)
+            {
+                count--;
+                if (count == 0)
+                    System.exit(0);
+            }
+        });
+
+        displayMap = new DisplayMap();
+        String title = System.getProperty("info.gridworld.gui.frametitle");
+        if (title == null) title = resources.getString("frame.title"); 
+        setTitle(title);
+        setLocation(25, 15);
+
+        URL appIconUrl = getClass().getResource("GridWorld.gif");
+        ImageIcon appIcon = new ImageIcon(appIconUrl);
+        setIconImage(appIcon.getImage());
+        
+        makeMenus();
+
+        JPanel content = new JPanel();
+        content.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        content.setLayout(new BorderLayout());
+        setContentPane(content);
+
+        display = new GridPanel(displayMap, resources);
+
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new
+           KeyEventDispatcher() 
+           {
+               public boolean dispatchKeyEvent(KeyEvent event)
+               {
+                   if (getFocusOwner() == null) return false;
+                   String text = KeyStroke.getKeyStrokeForEvent(event).toString();
+                   final String PRESSED = "pressed ";                  
+                   int n = text.indexOf(PRESSED);
+                   if (n < 0) return false;
+                   // filter out modifier keys; they are neither characters or actions
+                   if (event.getKeyChar() == KeyEvent.CHAR_UNDEFINED && !event.isActionKey()) 
+                       return false;
+                   text = text.substring(0, n)  + text.substring(n + PRESSED.length());
+                   boolean consumed = getWorld().keyPressed(text, display.getCurrentLocation());
+                   if (consumed) repaint();
+                   return consumed;
+               }
+           });
+        
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setViewport(new PseudoInfiniteViewport(scrollPane));
+        scrollPane.setViewportView(display);
+        content.add(scrollPane, BorderLayout.CENTER);
+
+        gridClasses = new TreeSet<Class>(new Comparator<Class>()
+        {
+            public int compare(Class a, Class b)
+            {
+                return a.getName().compareTo(b.getName());
+            }
+        });
+        for (String name : world.getGridClasses())
+            try
+            {
+                gridClasses.add(Class.forName(name));
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
+
+        Grid<T> gr = world.getGrid();
+        gridClasses.add(gr.getClass());
+
+        makeNewGridMenu();
+
+        control = new GUIController<T>(this, display, displayMap, resources);
+        content.add(control.controlPanel(), BorderLayout.SOUTH);
+
+        messageArea = new JTextArea(2, 35);
+        messageArea.setEditable(false);
+        messageArea.setFocusable(false);
+        messageArea.setBackground(new Color(0xFAFAD2));
+        content.add(new JScrollPane(messageArea), BorderLayout.NORTH);
+
+        pack();
+        repaint(); // to show message
+        display.setGrid(gr);
+    }
     public void repaint()
     {
         String message = getWorld().getMessage();

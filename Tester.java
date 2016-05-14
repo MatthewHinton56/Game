@@ -23,7 +23,7 @@ public class Tester {
 		inventory.addItem(StandardItems.loinclothC);
 		System.out.println(inventory);
 		//Combat simulator =  new Combat(StandardEnemies.goblins2,p, inventory);
-		new DungeonWorld();
+		new DungeonWorld(1,p,inventory);
 		//world.add(new Location(1,2) new Actor());
 	}
 

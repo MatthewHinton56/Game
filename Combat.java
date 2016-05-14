@@ -2,14 +2,26 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import info.gridworld.actor.Actor;
+import info.gridworld.gui.WorldFrame;
+
 public class Combat {
 private EnemyGroup e;
 private PlayerGroup p;
 private Inventory i;
 private ArrayList<Units> unit;
-private int place;
-private CombatWorld cw;
-	public Combat(EnemyGroup e,PlayerGroup p,Inventory io) {
+private int place,level,x,y;
+private Actor[][] floor;
+public boolean over;
+private DungeonWorld dW;
+public CombatWorld cw;
+	public Combat(EnemyGroup e,PlayerGroup p,Inventory io, DungeonWorld dW) {
+		floor=dW.getConfig();
+		x=dW.getX();
+		y=dW.getY();
+		level = dW.getLevel();
+		this.dW=dW;
+		over = false;
 		this.e=e;
 		this.p=p;
 		this.i=io;
@@ -30,7 +42,7 @@ private CombatWorld cw;
 		for(Units u: unit)System.out.println(u.getSpeed());
 		place = 0;
 		cw = new CombatWorld(this);
-		
+		cw.frame.setEnabled(true);
 		
 	}
 	public void execute(String move,int index)
@@ -59,7 +71,10 @@ private CombatWorld cw;
 			i.addGold(e.getGold());
 			int xpPerUnit = e.getXP()/4;
 			for(int i = 0;i<p.size();i++)p.getHero(i).addXP(xpPerUnit);
-			
+			over = true;
+			new DungeonWorld(level,p,i,floor,x,y);
+			cw.frame.setEnabled(false);
+			cw.frame.dispose();
 			}
 			place++;
 			if(place==6)place=0;

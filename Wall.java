@@ -14,4 +14,5 @@ int x,y;
 	{
 		return y;
 	}
+	public String toString(){return "x";}
 }

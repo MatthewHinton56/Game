@@ -32,3 +32,14 @@
 /BattleGrid.class
 /World.class
 /CombatWorld.class
+/ActorWorld.class
+/DungeonGrid.class
+/DungeonWorld.class
+/GUIController.class
+/GridPanel.class
+/Stat.class
+/StatDisplay.class
+/WorldFrame$GUIExceptionHandler.class
+/WorldFrame.class
+/Character.class
+/Exit.class

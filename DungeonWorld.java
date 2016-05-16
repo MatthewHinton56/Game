@@ -16,7 +16,7 @@ private PlayerGroup p;
 private int x,y,floorLevel;
 private DungeonGrid g;
 private Combat c;
-private GameMaster gm;
+public GameMaster gm;
 private static final String type = "Dungeon";
 private static final Location[] doorLoc = new Location[]{new Location(3,6),new Location(9,6),new Location(15,6),
 		new Location(3,12),new Location(9,12),new Location(15,12),
@@ -43,6 +43,7 @@ private static final int[][] startLoc = new int[][]{
     	this.p=p;
     	this.i=i0;
     	c=null;
+    	this.gm=gm;
     	floor = new Actor[19][19];
 		for(int i = 0;i<19;i+=6)for(int q =0;q<19;q++){floor[i][q]=new Wall(q,i);floor[q][i]=new Wall(i,q);}
 		for(Location l:doorLoc)floor[l.getRow()][l.getCol()]=null;
@@ -57,16 +58,18 @@ private static final int[][] startLoc = new int[][]{
 		System.setProperty("info.gridworld.gui.frametitle", "Dungeon"); // set your own title
     	show();
     }
-    public DungeonWorld(int floorLevel,PlayerGroup p,Inventory i0,Actor[][] floor,int x,int y) {
+    public DungeonWorld(int floorLevel,PlayerGroup p,Inventory i0,Actor[][] floor,int x,int y,GameMaster gm) {
     	this.floorLevel=floorLevel;
     	this.p=p;
     	this.i=i0;
     	c=null;
+    	this.gm=gm;
     	this.floor=floor;
+    	this.x=x;this.y=y;
     	floor[y][x]=new Character();
+    	removeExtra();
 		setUpRooms();
 		setFocus(x,y);	
-			this.x=x;this.y=y;
     	System.setProperty("info.gridworld.gui.selection", "hide"); // doesn’t show cell selection
 		System.setProperty("info.gridworld.gui.tooltips", "hide"); // doesn’t show tooltips
 		System.setProperty("info.gridworld.gui.frametitle", "Dungeon"); // set your own title
@@ -75,6 +78,7 @@ private static final int[][] startLoc = new int[][]{
     public void reset(int level)
     {
     	this.floorLevel=level;
+    	floor = new Actor[19][19];
     	for(int i = 0;i<19;i+=6)for(int q =0;q<19;q++){floor[i][q]=new Wall(q,i);floor[q][i]=new Wall(i,q);}
 		for(Location l:doorLoc)floor[l.getRow()][l.getCol()]=null;
 		floor[9][3]= new Character();
@@ -83,6 +87,7 @@ private static final int[][] startLoc = new int[][]{
 		setUpRooms();
 		setFocus(3,9);	
 			x=3;y=9;
+			show();
     }
     public void setFocus(int x,int y)
     {
@@ -112,6 +117,12 @@ private static final int[][] startLoc = new int[][]{
     	if(y2>18){y1-=(y2-=18);y2=18;}
     	g.move(floor, x1, x2, y1, y2);
     }
+    private void removeExtra()
+    {
+    	for(int i = 0;i<19;i++)
+    		for(int q = 0;q<19;q++)
+    			if(floor[i][q] instanceof Character && (i!=y||q!=x))floor[i][q]=null;
+    }
      public boolean keyPressed(String description, Location loc)
     {if(c== null || c.over==true){
         if(description.equals("RIGHT")||description.equals("D")){
@@ -130,12 +141,16 @@ private static final int[][] startLoc = new int[][]{
         		
         		
         	}
-        	else if(!(floor[y][x+1] instanceof Wall)){floor[y][x]=null;x++;floor[y][x]=new Character();move(x,y);return true;}
-        	if(floor[y][x+1] instanceof Exit)
-            {
+        	else if(floor[y][x+1] instanceof Exit)
+            {System.out.print("Exit move");
             	gm.setLevel(gm.getLevel()+1);
-            	reset(gm.getLevel());
-            }}
+            	//this.setGrid(null);
+            	//reset(gm.getLevel());
+            	new DungeonWorld(gm.getLevel(),p,i,gm);
+            	frame.dispose();
+            }
+        	else if(!(floor[y][x+1] instanceof Wall)){floor[y][x]=null;x++;floor[y][x]=new Character();move(x,y);return true;}
+        	}
         if(description.equals("LEFT")||description.equals("A")){
         	if(floor[y][x-1] instanceof EnemySpawn)
         	{
@@ -151,12 +166,16 @@ private static final int[][] startLoc = new int[][]{
         		
         		
         	}
-        	if(!(floor[y][x-1] instanceof Wall)){floor[y][x]=null;x--;floor[y][x]=new Character();move(x,y);return true;}
-        	if(floor[y][x-1] instanceof Exit)
-            {
+        	else if(floor[y][x-1] instanceof Exit)
+            {System.out.print("Exit move");
             	gm.setLevel(gm.getLevel()+1);
-            	reset(gm.getLevel());
-            }}
+            	//this.setGrid(null);
+            	//reset(gm.getLevel());
+            	new DungeonWorld(gm.getLevel(),p,i,gm);
+            	frame.dispose();
+            }
+        	if(!(floor[y][x-1] instanceof Wall)){floor[y][x]=null;x--;floor[y][x]=new Character();move(x,y);return true;}
+        	}
         if(description.equals("DOWN")||description.equals("S")){
         	if(floor[y+1][x] instanceof EnemySpawn)
         	{
@@ -170,12 +189,15 @@ private static final int[][] startLoc = new int[][]{
         		frame.dispose();
         		frame.setEnabled(false);
         	}
-        	if(!(floor[y+1][x] instanceof Wall)){floor[y][x]=null;y++;floor[y][x]=new Character();move(x,y);return true;}
-        	if(floor[y+1][x] instanceof Exit)
-            {
+        	else	if(floor[y+1][x] instanceof Exit)
+            {System.out.print("Exit move");
             	gm.setLevel(gm.getLevel()+1);
-            	reset(gm.getLevel());
-            }}
+            	//this.setGrid(null);
+            	//reset(gm.getLevel());
+            	new DungeonWorld(gm.getLevel(),p,i,gm);
+            	frame.dispose();
+            }
+        	if(!(floor[y+1][x] instanceof Wall)){floor[y][x]=null;y++;floor[y][x]=new Character();move(x,y);return true;}}
         
         if(description.equals("UP")||description.equals("W")){
         	if(floor[y-1][x] instanceof EnemySpawn)
@@ -190,12 +212,17 @@ private static final int[][] startLoc = new int[][]{
         		frame.dispose();
         		frame.setEnabled(false);
         	}
+        	else if(floor[y-1][x] instanceof Exit)
+            {
+        		System.out.print("Exit move");
+            	gm.setLevel(gm.getLevel()+1);
+            	//this.setGrid(null);
+            	//reset(gm.getLevel());
+            	new DungeonWorld(gm.getLevel(),p,i,gm);
+            	frame.dispose();
+            }
         	if(!(floor[y-1][x] instanceof Wall)){floor[y][x]=null;y--;floor[y][x]=new Character();move(x,y);return true;}
-        if(floor[y-1][x] instanceof Exit)
-        {
-        	gm.setLevel(gm.getLevel()+1);
-        	reset(gm.getLevel());
-        }}
+        	}
         //if(description.equals("T")){move(3,9);return true;}
     }
         return false;
@@ -207,7 +234,7 @@ private static final int[][] startLoc = new int[][]{
     	 {
     		 if(i[0]!= 7 || i[1]!=1)
     		 {
-    		 for(int x = 0;x<4;x++)
+    		 for(int x = 0;x<2;x++)
     		 {
     			 int xD = ((int)(Math.random()*5))+i[1];
     			 int yD = ((int)(Math.random()*5))+i[0];

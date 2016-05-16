@@ -11,7 +11,7 @@ public class Rogue extends Hero {
 		public Rogue(String name,int id) {
 			super(startStrength, startSpirit, startIntelligence, startSpeed, startDefense, name, type, startHealth,id);
 		}
-	public void levelUp()
+	public void levelUpCheck()
 	{
 		int spirit = 0;
 		int intelligence = 0;

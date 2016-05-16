@@ -1,3 +1,4 @@
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,7 +27,23 @@ private boolean complete;
 		complete = true;
 		level = 0;
 		mainMenu();
-		
+		i.addItem(new Chest(1, 1, 5, "a"));
+		i.addItem(new Pants(1, 1, 4, "b"));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Weapon(1, "c", 5));
 	}
 	private int count = 0;
 	private JButton select;
@@ -69,6 +86,7 @@ private boolean complete;
 		JTextField name = new JTextField();
 		JRadioButton rogue = new JRadioButton("Rogue");
 		JRadioButton warrior = new JRadioButton("Warrior");
+		warrior.setSelected(true);
 		JRadioButton monk = new JRadioButton("Monk");
 		JRadioButton whiteMage = new JRadioButton("White Mage");
 		JRadioButton blackMage = new JRadioButton("Black Mage");
@@ -87,6 +105,7 @@ private boolean complete;
 				if(grayMage.isSelected())p.addHero(new GrayMage(name.getText(),count));
 				name.setText("");
 				group.clearSelection();
+				warrior.setSelected(true);
 				count++;
 				if(count==3)select.setText("Finish");
 				if(count==4){confirm();frame.dispose();}
@@ -118,11 +137,21 @@ private boolean complete;
 	private void confirm()
 	{
 		JFrame frame = new JFrame("Confirm");
-		JLabel hero1 = new JLabel(p.getHero(0).getName()+": "+p.getHero(0).getType()+" "+p.getHero(0).getMaxHP());
-		JLabel hero2 = new JLabel(p.getHero(1).getName()+": "+p.getHero(1).getType()+" "+p.getHero(1).getMaxHP());
-		JLabel hero3 = new JLabel(p.getHero(2).getName()+": "+p.getHero(2).getType()+" "+p.getHero(2).getMaxHP());
-		JLabel hero4 = new JLabel(p.getHero(3).getName()+": "+p.getHero(3).getType()+" "+p.getHero(3).getMaxHP());
+		JLabel hero1 = new JLabel(p.getHero(0).getName()+": "+p.getHero(0).getType()+" HP: "+p.getHero(0).getMaxHP());
+		JLabel hero2 = new JLabel(p.getHero(1).getName()+": "+p.getHero(1).getType()+" HP: "+p.getHero(1).getMaxHP());
+		JLabel hero3 = new JLabel(p.getHero(2).getName()+": "+p.getHero(2).getType()+" HP: "+p.getHero(2).getMaxHP());
+		JLabel hero4 = new JLabel(p.getHero(3).getName()+": "+p.getHero(3).getType()+" HP: "+p.getHero(3).getMaxHP());
 		JPanel panel = new JPanel();
+		GridLayout layout = new GridLayout(3,2);
+		//layout.addLayoutComponent("Hero1", hero1);
+		//layout.addLayoutComponent("Hero1a", hero1a);
+		//layout.addLayoutComponent("Hero2", hero2);
+		//layout.addLayoutComponent("Hero2a", hero2a);
+		//layout.addLayoutComponent("Hero3", hero3);
+		//layout.addLayoutComponent("Hero3a", hero3a);
+		//layout.addLayoutComponent("Hero4", hero4);
+		//layout.addLayoutComponent("Hero4a", hero4a);
+		panel.setLayout(layout);
 		panel.add(hero1);panel.add(hero2);panel.add(hero3);panel.add(hero4);
 		JButton reSelect= new JButton("ReSelect");
 		 reSelect.setSize(100, 50);
@@ -139,17 +168,23 @@ private boolean complete;
 		 confirm.setSize(100, 50);
 		confirm.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				new DungeonWorld(level,p,i,gm);
+				makeDungeonWorld();
 				frame.dispose();
 			}
 			
 			
 		});
 		panel.add(reSelect);panel.add(confirm);
+		//layout.addLayoutComponent("reselect", reSelect);
+		//layout.addLayoutComponent("confirm", confirm);
 		frame.add(panel);
-		frame.setSize(150, 200);
+		frame.setSize(400, 150);
 		frame.setVisible(true);
 	}
 	public int getLevel(){return level;}
 	public void setLevel(int i){level=i;}
+	public void makeDungeonWorld()
+	{
+		new DungeonWorld(level,p,i,this);
+	}
 }

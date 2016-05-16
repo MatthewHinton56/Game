@@ -63,6 +63,10 @@ public void levelUP(int HP,int strength,int spirit,int speed,int intelligence,in
 	this.intelligence+=intelligence;
 	this.defense+=defense;
 }
+public void levelUpCheck()
+{
+	
+}
 public void takeDamage(int damage){if(damage<=0)damage=0;HP-=damage;}
 public boolean checkDead(){return HP<=0;}
 public void addXP(int iXP){XP+=iXP;}

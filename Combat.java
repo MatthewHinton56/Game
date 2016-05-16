@@ -70,9 +70,9 @@ public CombatWorld cw;
 			cw.setMessage("You win");
 			i.addGold(e.getGold());
 			int xpPerUnit = e.getXP()/4;
-			for(int i = 0;i<p.size();i++)p.getHero(i).addXP(xpPerUnit);
+			for(int i = 0;i<p.size();i++){p.getHero(i).addXP(xpPerUnit);p.getHero(i).levelUpCheck();}
 			over = true;
-			new DungeonWorld(level,p,i,floor,x,y);
+			new DungeonWorld(level,p,i,floor,x,y,dW.gm);
 			cw.frame.setEnabled(false);
 			cw.frame.dispose();
 			}

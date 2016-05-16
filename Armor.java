@@ -49,5 +49,9 @@ private String name,type;
 	{
 		return new Armor(HP,defense,price,name,type);
 	}
+	public String toString()
+	{
+		return "Name:" + name+" Type:"+type+" Price:"+price;
+	}
     
 }

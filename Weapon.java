@@ -25,4 +25,8 @@ public Object clone()
 {
 	return new Weapon(damage,name,price);
 }
+public String toString()
+{
+	return "Name:" + name+" Type:"+type+" Price:"+price;
+}
 }

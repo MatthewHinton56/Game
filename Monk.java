@@ -11,7 +11,7 @@ public class Monk extends Hero {
 		public Monk(String name,int id) {
 			super(startStrength, startSpirit, startIntelligence, startSpeed, startDefense, name, type, startHealth,id);
 		}
-	public void levelUp()
+	public void levelUpCheck()
 	{
 	
 		if(getXP()>Math.pow(2,getLvl())*coefficent)super.levelUP(5, 2, 0, 2, 0,2);

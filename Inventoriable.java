@@ -5,4 +5,5 @@ public interface Inventoriable {
 	int getPrice();
 	String getStat();
 	String getType();
+	String toString();
 }

@@ -98,4 +98,5 @@ private int gold;
 		for(Inventoriable i: inventory)ret+=i.getStat();
 		return ret;
 	}
+	public int getInventorySize(){return inventory.size();}
 }

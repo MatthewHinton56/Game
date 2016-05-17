@@ -6,4 +6,5 @@ public interface Inventoriable {
 	String getStat();
 	String getType();
 	String toString();
+	Object clone();
 }

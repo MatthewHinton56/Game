@@ -14,4 +14,8 @@ public class Gloves extends Armor {
     	super(HP,defense,price,name,type);
 
     }
+    public Object clone()
+   	{
+   		return new Gloves(getHP(),getDefense(),getPrice(),getName());
+   	}
 }

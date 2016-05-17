@@ -1,5 +1,5 @@
 /* 
- * AP(r) Computer Science GridWorld Case Study:
+4 * AP(r) Computer Science GridWorld Case Study:
  * Copyright(c) 2002-2006 College Entrance Examination Board 
  * (http://www.collegeboard.com).
  *
@@ -192,7 +192,6 @@ public class WorldFrame<T> extends JFrame
         messageArea.setFocusable(false);
         messageArea.setBackground(new Color(0xFAFAD2));
         content.add(new JScrollPane(messageArea), BorderLayout.NORTH);
-
         pack();
         repaint(); // to show message
         display.setGrid(gr);

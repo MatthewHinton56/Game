@@ -15,5 +15,8 @@ public static final String type = "Chest";
     	super(HP,defense,price,name,type);
 
     }
-    
+    public Object clone()
+	{
+		return new Chest(getHP(),getDefense(),getPrice(),getName());
+	}
 }

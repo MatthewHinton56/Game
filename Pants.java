@@ -5,4 +5,8 @@ public class Pants extends Armor{
     	super(HP,defense,price,name,type);
 
     }
+    public Object clone()
+   	{
+   		return new Pants(getHP(),getDefense(),getPrice(),getName());
+   	}
 }

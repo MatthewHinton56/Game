@@ -21,6 +21,8 @@ public class Tester {
 		//simulator.execute();
 		Inventory inventory = new Inventory();
 		inventory.addItem(StandardItems.loinclothC);
+		//new InnGui(9,inventory,p);
+		//new ShopGui(9,inventory);
 		//System.out.println(inventory);
 		//Combat simulator =  new Combat(StandardEnemies.goblins2,p, inventory);
 		//new DungeonWorld(1,p,inventory);

@@ -109,7 +109,6 @@ public class World<T>
 
     /**
      * Sets the message to be displayed in the world frame above the grid.
-     * @param newMessage the new message
      */
     public void setMessage(String newMessage)
     {

@@ -44,6 +44,25 @@ private static final int[][] startLoc = new int[][]{
     	this.i=i0;
     	c=null;
     	this.gm=gm;
+    	if(floorLevel%10==9)
+    	{
+    		//setMessage("Floor: "+floorLevel);
+    		floor = new Actor[7][11];
+    		for(int i = 0;i<11;i++){floor[0][i]=new Wall(i,0);floor[6][i]=new Wall(i,6);}
+    		for(int q = 0;q<7;q++){floor[q][0]=new Wall(0,q);floor[q][10]=new Wall(10,q);}
+    		floor[3][10]= new Exit();
+    		floor[1][2] = new Wall(2,1);floor[1][4] = new Wall(4,1);floor[1][3] = new Inn();
+    		floor[1][6] = new Wall(2,1);floor[1][8] = new Wall(4,1);floor[1][7] = new Shop();
+    		floor[3][2]= new Character();
+    		setFocus(2,3);
+    		x=2;y=3;
+    		System.setProperty("info.gridworld.gui.selection", "hide"); // doesn’t show cell selection
+    		System.setProperty("info.gridworld.gui.tooltips", "hide"); // doesn’t show tooltips
+    		//System.setProperty("info.gridworld.gui.frametitle", "Dungeon"); // set your own title
+        	show();
+    	}
+    	else
+    	{
     	floor = new Actor[19][19];
 		for(int i = 0;i<19;i+=6)for(int q =0;q<19;q++){floor[i][q]=new Wall(q,i);floor[q][i]=new Wall(i,q);}
 		for(Location l:doorLoc)floor[l.getRow()][l.getCol()]=null;
@@ -55,7 +74,10 @@ private static final int[][] startLoc = new int[][]{
 			x=3;y=9;
     	System.setProperty("info.gridworld.gui.selection", "hide"); // doesn’t show cell selection
 		System.setProperty("info.gridworld.gui.tooltips", "hide"); // doesn’t show tooltips
-		System.setProperty("info.gridworld.gui.frametitle", "Dungeon"); // set your own title
+		//System.setProperty("info.gridworld.gui.frametitle", "Dungeon"); // set your own title
+		setMessage("Floor: "+floorLevel);
+    	show();
+    	}
     	show();
     }
     public DungeonWorld(int floorLevel,PlayerGroup p,Inventory i0,Actor[][] floor,int x,int y,GameMaster gm) {
@@ -72,7 +94,8 @@ private static final int[][] startLoc = new int[][]{
 		setFocus(x,y);	
     	System.setProperty("info.gridworld.gui.selection", "hide"); // doesn’t show cell selection
 		System.setProperty("info.gridworld.gui.tooltips", "hide"); // doesn’t show tooltips
-		System.setProperty("info.gridworld.gui.frametitle", "Dungeon"); // set your own title
+		//System.setProperty("info.gridworld.gui.frametitle", "Dungeon"); // set your own title
+		setMessage("Floor: "+floorLevel);
     	show();
     }
     public void reset(int level)
@@ -99,6 +122,7 @@ private static final int[][] startLoc = new int[][]{
     	int y2 = y+3;
     	if(y1<0){y2-=y1;y1=0;}
     	if(y2>18){y1-=(y2-=18);y2=18;}
+    	if(floor.length==7 && y2>=floor.length-1){y1-=(y2-=6);y2=6;}
     	//System.out.println (""+y1+y2+x1+x2);
     	g = new DungeonGrid(floor,x1,x2,y1,y2);
     	this.setGrid(g);
@@ -111,10 +135,12 @@ private static final int[][] startLoc = new int[][]{
     	int x2 = x+3;
     	if(x1<0){x2-=x1;x1=0;}
     	if(x2>18){x1-=(x2-=18);x2=18;}
+    	if(floor[0].length==11&& x2>floor[0].length-1){x1-=(x2-=10);x2=10;}
     	int y1 = y-3;
     	int y2 = y+3;
     	if(y1<0){y2-=y1;y1=0;}
     	if(y2>18){y1-=(y2-=18);y2=18;}
+    	if(floor.length==7 && y2>=floor.length-1){y1-=(y2-=6);y2=6;}
     	g.move(floor, x1, x2, y1, y2);
     }
     private void removeExtra()
@@ -149,6 +175,8 @@ private static final int[][] startLoc = new int[][]{
             	new DungeonWorld(gm.getLevel(),p,i,gm);
             	frame.dispose();
             }
+        	else if(floor[y][x+1] instanceof Shop) new ShopGui(floorLevel,i);
+        	else if(floor[y][x+1] instanceof Inn) new InnGui(floorLevel,i,p);
         	else if(!(floor[y][x+1] instanceof Wall)){floor[y][x]=null;x++;floor[y][x]=new Character();move(x,y);return true;}
         	}
         if(description.equals("LEFT")||description.equals("A")){
@@ -174,7 +202,9 @@ private static final int[][] startLoc = new int[][]{
             	new DungeonWorld(gm.getLevel(),p,i,gm);
             	frame.dispose();
             }
-        	if(!(floor[y][x-1] instanceof Wall)){floor[y][x]=null;x--;floor[y][x]=new Character();move(x,y);return true;}
+        	else if(floor[y][x-1] instanceof Shop) new ShopGui(floorLevel,i);
+        	else if(floor[y][x-1] instanceof Inn) new InnGui(floorLevel,i,p);
+        	else if(!(floor[y][x-1] instanceof Wall)){floor[y][x]=null;x--;floor[y][x]=new Character();move(x,y);return true;}
         	}
         if(description.equals("DOWN")||description.equals("S")){
         	if(floor[y+1][x] instanceof EnemySpawn)
@@ -197,7 +227,9 @@ private static final int[][] startLoc = new int[][]{
             	new DungeonWorld(gm.getLevel(),p,i,gm);
             	frame.dispose();
             }
-        	if(!(floor[y+1][x] instanceof Wall)){floor[y][x]=null;y++;floor[y][x]=new Character();move(x,y);return true;}}
+        	else if(floor[y+1][x] instanceof Shop) new ShopGui(floorLevel,i);
+        	else if(floor[y+1][x] instanceof Inn) new InnGui(floorLevel,i,p);
+        	else if(!(floor[y+1][x] instanceof Wall)){floor[y][x]=null;y++;floor[y][x]=new Character();move(x,y);return true;}}
         
         if(description.equals("UP")||description.equals("W")){
         	if(floor[y-1][x] instanceof EnemySpawn)
@@ -221,7 +253,9 @@ private static final int[][] startLoc = new int[][]{
             	new DungeonWorld(gm.getLevel(),p,i,gm);
             	frame.dispose();
             }
-        	if(!(floor[y-1][x] instanceof Wall)){floor[y][x]=null;y--;floor[y][x]=new Character();move(x,y);return true;}
+        	else if(floor[y-1][x] instanceof Shop) new ShopGui(floorLevel,i);
+        	else if(floor[y-1][x] instanceof Inn) new InnGui(floorLevel,i,p);
+        	else if(!(floor[y-1][x] instanceof Wall)){floor[y][x]=null;y--;floor[y][x]=new Character();move(x,y);return true;}
         	}
         //if(description.equals("T")){move(3,9);return true;}
     }

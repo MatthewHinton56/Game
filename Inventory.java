@@ -24,6 +24,10 @@ private int gold;
 	{
 		inventory.add(i);
 	}
+	public void removeItem(Inventoriable i)
+	{
+		 inventory.remove(i);
+	}
 	public Inventoriable getItem(String name,String type)
 	{
 		for(Inventoriable i: inventory)if(i.getName().equals(name)&&i.getType().equals(type))return i;

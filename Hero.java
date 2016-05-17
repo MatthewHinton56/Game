@@ -31,17 +31,42 @@ public Hero(int strength,int spirit,int intelligence,int speed,int defense,Strin
 	this.type=type;
 	this.name=name;
 }
-public Armor equipArmor(Armor a)
-{	Armor temp = null;
-	if(a instanceof Chest){HP-=chest.getHP();defense-=chest.getDefense();temp=(Armor)chest.clone();chest=(Chest)a;HP+=chest.getHP();defense+=chest.getDefense();}
-	if(a instanceof Pants){HP-=pants.getHP();defense-=pants.getDefense();temp=(Armor)pants.clone();pants=(Pants)a;HP+=pants.getHP();defense+=pants.getDefense();}
-	if(a instanceof Gloves){HP-=gloves.getHP();defense-=gloves.getDefense();temp=(Armor)gloves.clone();chest=(Chest)a;HP+=gloves.getHP();defense+=gloves.getDefense();}
-	if(a instanceof Helmet){HP-=helmet.getHP();defense-=helmet.getDefense();temp=(Armor)helmet.clone();chest=(Chest)a;HP+=helmet.getHP();defense+=helmet.getDefense();}
+public Chest equipChest(Chest c)
+{
+	Chest temp = null;
+	if(chest!=null){HP-=chest.getHP();defense-=chest.getDefense();temp=(Chest)chest.clone();}
+	chest=c;
+	if(chest!=null){HP+=chest.getHP();defense+=chest.getDefense();}
+	return temp;		
+}
+public Pants equipPants(Pants p)
+{
+	Pants temp = null;
+	if(pants!=null){HP-=pants.getHP();defense-=pants.getDefense();temp=(Pants)pants.clone();}
+	pants = p;
+	if(pants!=null){HP+=pants.getHP();defense+=pants.getDefense();}
+	return temp;
+}
+public Gloves equipGloves(Gloves g)
+{
+	Gloves temp = null;
+	if(gloves!=null){HP-=gloves.getHP();defense-=gloves.getDefense();temp=(Gloves)gloves.clone();}
+	gloves = g;
+	if(gloves!=null){HP+=gloves.getHP();defense+=gloves.getDefense();}
+	return temp;
+}
+public Helmet equipHelmet(Helmet h)
+{
+	Helmet temp = null;
+	if(helmet!=null){HP-=helmet.getHP();defense-=helmet.getDefense();temp=(Helmet)helmet.clone();}
+	helmet = h;
+	if(helmet!=null){HP+=helmet.getHP();defense+=helmet.getDefense();}
 	return temp;
 }
 public Weapon equipWeapon(Weapon w)
 {
-	Weapon temp = (Weapon)weapon.clone();
+	Weapon temp = null;
+	if(weapon!=null)temp=(Weapon)weapon.clone();
 	weapon = w;
 	return temp;
 }
@@ -56,7 +81,7 @@ public void levelUP(int HP,int strength,int spirit,int speed,int intelligence,in
 {
 	lvl++;
 	this.HP+=HP;
-	this.maxHP=HP;
+	this.maxHP+=HP;
 	this.strength+=strength;
 	this.spirit+=spirit;
 	this.speed+=speed;
@@ -123,6 +148,7 @@ public int getDefend()
 {
 	return defend();
 }
+public void maxHP(){HP=maxHP;}
 public int getMaxHP(){return maxHP;}
 @Override
 public int play(Units u, String s) {

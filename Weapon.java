@@ -16,7 +16,7 @@ public int getPrice() {
 	return price;
 }
 public String getStat() {
-	return "Type "+type+" Damage: "+damage;
+	return name+ " Damage: "+damage;
 }
 public String getType() {
 	return type;

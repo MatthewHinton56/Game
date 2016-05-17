@@ -27,23 +27,16 @@ private boolean complete;
 		complete = true;
 		level = 0;
 		mainMenu();
-		i.addItem(new Chest(1, 1, 5, "a"));
-		i.addItem(new Pants(1, 1, 4, "b"));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
-		i.addItem(new Weapon(1, "c", 5));
+		i.addItem(new Chest(0,0,0, "test1"));
+		i.addItem(new Chest(0,0,0, "test2"));
+		i.addItem(new Pants(0,0,0, "test3"));
+		i.addItem(new Pants(0,0,0, "test4"));
+		i.addItem(new Gloves(0,0,0, "test5"));
+		i.addItem(new Gloves(0,0,0, "test6"));
+		i.addItem(new Helmet(0,0,0, "test7"));
+		i.addItem(new Helmet(0,0,0, "test8"));
+		i.addItem(new Weapon(0,"test9", 0));
+		i.addItem(new Weapon(0,"test10", 0));
 	}
 	private int count = 0;
 	private JButton select;
@@ -185,6 +178,6 @@ private boolean complete;
 	public void setLevel(int i){level=i;}
 	public void makeDungeonWorld()
 	{
-		new DungeonWorld(level,p,i,this);
+		new DungeonWorld(1,p,i,this);
 	}
 }

@@ -6,4 +6,8 @@ public class Helmet extends Armor{
     	super(HP,defense,price,name,type);
 
     }
+    public Object clone()
+   	{
+   		return new Helmet(getHP(),getDefense(),getPrice(),getName());
+   	}
 }

@@ -13,6 +13,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -40,6 +41,109 @@ public class Menu {
 		String temp = "";
 		for(Inventoriable i: io)temp+=i+"\n";
 		tx.setText(temp);
+	}
+	public void makeMagic(int o)
+	{
+		frame.setTitle("Magic");
+		JPanel panel = new JPanel();
+		JPanel panel2 = new JPanel();
+		panel2.setLayout(new GridLayout(1,2));
+		ArrayList<String>magicList = p.getHero(o).spellList;
+		DefaultListModel model1 = new DefaultListModel();
+		DefaultListModel model2 = new DefaultListModel();
+		panel.setLayout(new GridLayout(3,2));
+		JList list1 = new JList(model1);
+		JList list2 = new JList(model2);
+		JLabel label1 = new JLabel("Mana: "+p.getHero(o).mana);
+		JScrollPane scroll1 = new JScrollPane(list1);
+		JScrollPane scroll2 = new JScrollPane(list2);
+		JButton ret = new JButton("Return");
+		for(String s:p.getHero(o).spellList)
+		{
+			if(Magic.isBlack(s))model1.addElement(s);
+			else model2.addElement(s);
+		}
+		ret.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			frame.remove(panel);frame.remove(panel2);	
+			makeMain();
+				
+			}});
+		JButton selectBlack = new JButton("Cast");
+		selectBlack.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(list1.getSelectedIndex()>-1)
+				{
+					if(p.getHero(o).mana>Magic.getManaB((String)list1.getSelectedValue()))
+					{
+					label1.setText("N/A");
+					}
+				}
+				
+			}});
+		JButton selectWhite = new JButton("Cast");
+		selectWhite.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(list2.getSelectedIndex()>-1)
+				{
+					
+					if(Magic.nonCombat((String)list2.getSelectedValue()))
+					{
+					if(Magic.whiteAll((String)list2.getSelectedValue())) 
+					{
+						if(p.getHero(o).mana>Magic.getManaW((String)list2.getSelectedValue()))	{p.getHero(o).mana-=Magic.getManaW((String)list2.getSelectedValue());if(p.getHero(o).mana<0)p.getHero(o).mana=0;
+						Magic.whiteHealAll(p.getHero(o), p, (String)list2.getSelectedValue());}	
+						else label1.setText("insufficent");
+					}
+					else 
+					{
+						JOptionPane prompt = new JOptionPane();
+						int i = Integer.parseInt(prompt.showInputDialog("Choose from 1 to 4"))-1;
+						if(p.getHero(o).mana>Magic.getManaW((String)list2.getSelectedValue()))	{p.getHero(o).mana-=Magic.getManaW((String)list2.getSelectedValue());if(p.getHero(o).mana<0)p.getHero(o).mana=0;
+						Magic.whiteSolo(p.getHero(o), p.getHero(i), (String)list2.getSelectedValue());}	
+						else label1.setText("insufficent");
+					}
+					}
+					else label1.setText("N/A");
+				}
+				
+			}});
+		JButton back = new JButton("<-");
+		back.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int iO = o-1;
+				if(iO==-1)iO=3;
+				frame.remove(panel);
+				frame.remove(panel2);
+				makeMagic(iO);
+			}});
+	
+	JButton forward = new JButton("->");
+	forward.addActionListener(new ActionListener(){
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int iO = o+1;
+			if(iO==4)iO=0;
+			frame.remove(panel);
+			frame.remove(panel2);
+			makeMagic(iO);
+		}});
+		frame.setSize(400,300);
+		frame.setResizable(false);
+		panel.add(ret);panel.add(label1);panel2.add(scroll1);panel2.add(scroll2);panel.add(selectBlack);panel.add(selectWhite);panel.add(back);panel.add(forward);
+		frame.setLayout(new BorderLayout());
+		
+		frame.add(panel,BorderLayout.NORTH);frame.add(panel2,BorderLayout.CENTER);
+		frame.setVisible(true);
 	}
 	public void makeEquip(int o)
 	{	JLabel label1a = new JLabel("Chest:");
@@ -349,7 +453,7 @@ public class Menu {
 	{ Hero h = p.getHero(i);
 		frame.setTitle("Status");
 		JPanel panel = new JPanel();
-		GridLayout layout = new GridLayout(15,2);
+		GridLayout layout = new GridLayout(16,2);
 		panel.setLayout(layout);
 		JLabel hero1a = new JLabel("   "+h.getName());
 		JLabel hero2a = new JLabel("Class: ");
@@ -378,6 +482,8 @@ public class Menu {
 		JLabel hero13b = new JLabel(h.getHelmet().getName());
 		JLabel hero14a = new JLabel("Weapon: ");
 		JLabel hero14b = new JLabel(h.getWeapon().getName());
+		JLabel hero15a = new JLabel("Mana: ");
+		JLabel hero15b = new JLabel(h.mana+"/"+h.manafull);
 		
 		JButton ret = new JButton("Return");
 		ret.addActionListener(new ActionListener(){
@@ -415,8 +521,8 @@ public class Menu {
 	panel.add(hero2b);
 	panel.add(hero3a);
 	panel.add(hero3b);
-	panel.add(hero3a);
-	panel.add(hero3b);
+	panel.add(hero15a);
+	panel.add(hero15b);
 	panel.add(hero4a);
 	panel.add(hero4b);
 	panel.add(hero5a);
@@ -467,6 +573,14 @@ public class Menu {
 		JButton inventory = new JButton("Inventory");
 		JButton equip = new JButton("Equip");
 		JButton magic = new JButton("Magic");
+		magic.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.remove(panel);
+				 makeMagic(0);
+				
+			}});
 		status.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)

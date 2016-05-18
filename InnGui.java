@@ -25,7 +25,7 @@ public class InnGui extends JFrame {
 				if(i.getGold()>goldRequired)
 				{
 					i.removeGold(goldRequired);
-					for(int q = 0;q<4;q++)p.getHero(q).maxHP();
+					for(int q = 0;q<4;q++){p.getHero(q).maxHP();p.getHero(q).mana=p.getHero(q).manafull;}
 					goldAmount.setText("Gold: "+i.getGold()+"");
 					confirm.setText("You awake refreshed");
 				}

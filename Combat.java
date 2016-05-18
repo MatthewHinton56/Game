@@ -47,7 +47,6 @@ public CombatWorld cw;
 	}
 	public void execute(String move,int index)
 	{
-	
 			//for(int q = 0;q<unit.size();q++)System.out.println(unit.get(q).status());
 			Units u=null;
 				switch (move)
@@ -71,6 +70,62 @@ public CombatWorld cw;
 			i.addGold(e.getGold());
 			int xpPerUnit = e.getXP()/4;
 			for(int i = 0;i<p.size();i++){p.getHero(i).addXP(xpPerUnit);p.getHero(i).levelUpCheck();}
+			over = true;
+			new DungeonWorld(level,p,i,floor,x,y,dW.gm);
+			cw.frame.setEnabled(false);
+			cw.frame.dispose();
+			}
+			place++;
+			if(place==6)place=0;
+			if(unit.get(place) instanceof Enemy && !unit.get(place).checkDead())execute();
+	}
+	public void execute(String move,int index,String magic)
+	{
+			//for(int q = 0;q<unit.size();q++)System.out.println(unit.get(q).status());
+			if(Magic.attacksAll(magic))
+			{
+				int damage = Magic.blackAttackAll((Hero)unit.get(place), e, magic);
+				cw.setMessage(unit.get(place).getName()+" casts "+magic+" for "+damage+" damage to all enemies");
+			}
+			else if(Magic.whiteAll(magic))
+			{
+				int heal  = Magic.whiteHealAll((Hero)unit.get(place), p, magic);
+				cw.setMessage(unit.get(place).getName()+" casts "+magic+" and heals all allies for "+heal);
+			}
+			else if(Magic.whiteAttack(magic))
+			{
+				int damage = Magic.whiteAttackAll((Hero)unit.get(place), e);
+				cw.setMessage(unit.get(place).getName()+" casts "+magic+" for "+damage+" damage to all enemies");
+			}
+			else if(Magic.isWhite(magic))
+			{
+				int heal  = Magic.whiteSolo((Hero)unit.get(place), p.getHero(index), magic);
+				if(heal!=0)
+				cw.setMessage(unit.get(place).getName()+" casts "+magic+" and heals all allies for "+heal);
+				else
+				cw.setMessage(unit.get(place).getName()+" casts "+magic+" on "+p.getHero(index).getName());	
+			}
+			else
+			{
+				int damage = Magic.blackAttackSolo((Hero)unit.get(place), e.get(index), magic);
+				cw.setMessage(unit.get(place).getName()+" casts "+magic+" for "+damage+" damage to "+e.get(index).getName());
+			}
+			//int damage = unit.get(place).play(u, move);
+			//if(!move.equals("d"))cw.setMessage(((Hero)unit.get(place)).getName()+" deals "+damage+" damage");
+			unit.get(place).reset();
+			for(int q = 0;q<e.size();q++)
+			{
+			if(e.get(q).checkDead())
+			{
+				cw.getGrid().remove(BattleGrid.enemyLoc[q]);
+			}
+			}
+			if(e.checkDead())
+			{
+			cw.setMessage("You win");
+			i.addGold(e.getGold());
+			int xpPerUnit = e.getXP()/4;
+			for(int i = 0;i<p.size();i++){p.getHero(i).addXP(xpPerUnit);p.getHero(i).levelUpCheck();p.getHero(i).heroReset();}
 			over = true;
 			new DungeonWorld(level,p,i,floor,x,y,dW.gm);
 			cw.frame.setEnabled(false);

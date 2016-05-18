@@ -9,7 +9,7 @@ public class Monk extends Hero {
 	private static final int startHealth = 23;
 	public static final String type = "Monk";
 		public Monk(String name,int id) {
-			super(startStrength, startSpirit, startIntelligence, startSpeed, startDefense, name, type, startHealth,id);
+			super(startStrength, startSpirit, startIntelligence, startSpeed, startDefense, name, type, startHealth,id,false,false);
 		}
 	public void levelUpCheck()
 	{

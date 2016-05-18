@@ -1,8 +1,11 @@
+import java.util.ArrayList;
 
 public class Hero implements Units {
 
-private int maxHP, HP, lvl, XP, strength,spirit,intelligence,speed,defense,id;
+private int maxHP, HP, lvl, XP, strength,spirit,intelligence,speed,defense,id,tStrength,tSpeed,tDefense;
+public int mana,manafull;
 private String name,type;
+public ArrayList<String> spellList;
 private Chest chest;
 private Gloves gloves;
 private Pants pants;
@@ -10,8 +13,9 @@ private Helmet helmet;
 private Weapon weapon;
 private boolean defending;
 public static final int coefficent = 10;
-public Hero(int strength,int spirit,int intelligence,int speed,int defense,String name,String type,int HP,int id)
-{	this.id=id;
+public Hero(int strength,int spirit,int intelligence,int speed,int defense,String name,String type,int HP,int id,boolean white,boolean black)
+{	spellList = new ArrayList<String>();
+	this.id=id;
 	defending = true;
 	this.name=name;
 	this.type=type;
@@ -24,43 +28,52 @@ public Hero(int strength,int spirit,int intelligence,int speed,int defense,Strin
 	this.maxHP=HP+3;
 	this.lvl=1;
 	this.XP=0;
+	this.intelligence=intelligence;
 	this.strength=strength;
+	tStrength = strength;
 	this.speed=speed;
+	tSpeed = speed;
 	this.spirit=spirit;
 	this.defense=defense+3;
+	tDefense= defense;
 	this.type=type;
 	this.name=name;
+	this.mana=mana;
 }
 public Chest equipChest(Chest c)
 {
 	Chest temp = null;
-	if(chest!=null){HP-=chest.getHP();defense-=chest.getDefense();temp=(Chest)chest.clone();}
+	if(chest!=null){maxHP-=chest.getHP();defense-=chest.getDefense();temp=(Chest)chest.clone();}
 	chest=c;
-	if(chest!=null){HP+=chest.getHP();defense+=chest.getDefense();}
+	if(chest!=null){maxHP+=chest.getHP();defense+=chest.getDefense();}
+	tDefense= defense;
 	return temp;		
 }
 public Pants equipPants(Pants p)
 {
 	Pants temp = null;
-	if(pants!=null){HP-=pants.getHP();defense-=pants.getDefense();temp=(Pants)pants.clone();}
+	if(pants!=null){maxHP-=pants.getHP();defense-=pants.getDefense();temp=(Pants)pants.clone();}
 	pants = p;
-	if(pants!=null){HP+=pants.getHP();defense+=pants.getDefense();}
+	if(pants!=null){maxHP+=pants.getHP();defense+=pants.getDefense();}
+	tDefense= defense;
 	return temp;
 }
 public Gloves equipGloves(Gloves g)
 {
 	Gloves temp = null;
-	if(gloves!=null){HP-=gloves.getHP();defense-=gloves.getDefense();temp=(Gloves)gloves.clone();}
+	if(gloves!=null){maxHP-=gloves.getHP();defense-=gloves.getDefense();temp=(Gloves)gloves.clone();}
 	gloves = g;
-	if(gloves!=null){HP+=gloves.getHP();defense+=gloves.getDefense();}
+	if(gloves!=null){maxHP+=gloves.getHP();defense+=gloves.getDefense();}
+	tDefense= defense;
 	return temp;
 }
 public Helmet equipHelmet(Helmet h)
 {
 	Helmet temp = null;
-	if(helmet!=null){HP-=helmet.getHP();defense-=helmet.getDefense();temp=(Helmet)helmet.clone();}
+	if(helmet!=null){maxHP-=helmet.getHP();defense-=helmet.getDefense();temp=(Helmet)helmet.clone();}
 	helmet = h;
-	if(helmet!=null){HP+=helmet.getHP();defense+=helmet.getDefense();}
+	if(helmet!=null){maxHP+=helmet.getHP();defense+=helmet.getDefense();}
+	tDefense= defense;
 	return temp;
 }
 public Weapon equipWeapon(Weapon w)
@@ -83,10 +96,13 @@ public void levelUP(int HP,int strength,int spirit,int speed,int intelligence,in
 	this.HP+=HP;
 	this.maxHP+=HP;
 	this.strength+=strength;
+	tStrength+=strength;
 	this.spirit+=spirit;
 	this.speed+=speed;
+	tSpeed+=speed;
 	this.intelligence+=intelligence;
 	this.defense+=defense;
+	tDefense+=defense;
 }
 public void levelUpCheck()
 {
@@ -148,6 +164,7 @@ public int getDefend()
 {
 	return defend();
 }
+public void addHealth(int h){HP+=h;if(HP>maxHP)HP=maxHP;}
 public void maxHP(){HP=maxHP;}
 public int getMaxHP(){return maxHP;}
 @Override
@@ -179,9 +196,18 @@ public void reset() {
 	defending = false;
 	
 }
+public void addDefense(int d){defense+=d;}
+public void addStrength(int s){strength+=s;}
+public void addSpeed(int s){speed+=s;}
 public boolean equals(Object o)
 {
 	return this.id==((Hero)o).id;
+}
+public void heroReset()
+{
+	strength = tStrength;
+	defense = tDefense;
+	speed = tSpeed;
 }
 public int id(){return id;}
 public String status()

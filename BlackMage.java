@@ -1,4 +1,4 @@
-
+import java.util.*;
 
 public class BlackMage extends Hero {
 	private static final int startStrength = 1;
@@ -25,4 +25,9 @@ public class BlackMage extends Hero {
 		this.mana+=(getLvl()*5);this.manafull+=(getLvl()*5);
 		}
 		//Health,strength,spirit,speed,intelligence,defense
-	}}
+	}
+	public BlackMage(int HP,int maxHP,int mana,int manafull,int lvl,int XP,int strength,int spirit,int intelligence,int speed,int defense,Chest c,Gloves g,Pants p,Helmet h,Weapon w,
+ArrayList<String> spells,int id,String name)
+{
+	super(type,HP,maxHP,mana,manafull,lvl,XP,strength,spirit,intelligence,speed,defense,c,g,p,h,w,spells,id,name);
+}}

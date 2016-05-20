@@ -40,6 +40,58 @@ public Hero(int strength,int spirit,int intelligence,int speed,int defense,Strin
 	this.name=name;
 	this.mana=mana;
 }
+public Hero(String type,int HP,int maxHP,int mana,int manafull,int lvl,int XP,int strength,int spirit,int intelligence,int speed,int defense,Chest c,Gloves g,Pants p,Helmet h,Weapon w,
+ArrayList<String> spells,int id,String name)
+{
+	spellList = spells;
+	this.id=id;
+	defending = true;
+	this.type=type;
+	this.name=name;
+	chest=c;
+	gloves=g;
+	weapon=w;
+	helmet=h;
+	pants=p;
+	this.HP=HP;
+	this.maxHP=maxHP;
+	this.lvl=lvl;
+	this.XP=XP;
+	this.intelligence=intelligence;
+	this.strength=strength;
+	tStrength = strength;
+	this.speed=speed;
+	tSpeed = speed;
+	this.spirit=spirit;
+	this.defense=defense;
+	tDefense= defense;
+	this.type=type;
+	this.name=name;
+	this.mana=mana;
+	this.name=name;
+}
+public String save()
+{
+	String temp = type;
+	temp+="\n"+name;
+	temp+="\n"+HP+" "+maxHP;
+	temp+="\n"+mana+" "+manafull;
+	temp+="\n"+lvl+" "+XP;
+	temp+="\n"+strength+" "+spirit+" "+intelligence+" "+speed+" "+defense;
+	if(chest!=null)temp+="\n"+chest.save();
+	else temp+="\nnull";
+	if(gloves!=null)temp+="\n"+gloves.save();
+	else temp+="\nnull";
+	if(pants!=null)temp+="\n"+pants.save();
+	else temp+="\nnull";
+	if(helmet!=null)temp+="\n"+helmet.save();
+	else temp+="\nnull";
+	if(weapon!=null)temp+="\n"+weapon.save();
+	else temp+="\nnull";
+	temp+="\n"+spellList.size();
+	for(String s:spellList)temp+="\n"+s;
+	return temp;
+}
 public Chest equipChest(Chest c)
 {
 	Chest temp = null;

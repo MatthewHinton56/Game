@@ -6,10 +6,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 public class InnGui extends JFrame {
-	public InnGui(int floor,Inventory i,PlayerGroup p)
+	private Inventory i;
+private PlayerGroup p;
+	public InnGui(int floor,Inventory io,PlayerGroup po)
 	{
+		i=io;
+		p=po;
 		setTitle("INN");
 		final int o = floor/9;
 		JPanel panel = new JPanel();

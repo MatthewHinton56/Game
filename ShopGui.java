@@ -17,18 +17,19 @@ public class ShopGui extends JFrame {
 			StandardItems.loinclothP,
 			StandardItems.loinclothG,
 			StandardItems.woodenStick};
-	
-	public ShopGui(int level,Inventory i)
+	private Inventory i;
+	public ShopGui(int level,Inventory id)
 	{
-		int o = level/9;
-		DefaultListModel model1 = new DefaultListModel();
-		JList list1 = new JList(model1);
-		DefaultListModel model2 = new DefaultListModel();
-		JList list2 = new JList(model2);
-		JScrollPane pane1 = new JScrollPane(list1);
-		JScrollPane pane2 = new JScrollPane(list2);
-		JLabel label1 = new JLabel();
-		JLabel label2 = new JLabel();
+		i=id;
+	final	int o = level/9;
+	final	DefaultListModel model1 = new DefaultListModel();
+	final	JList list1 = new JList(model1);
+	final	DefaultListModel model2 = new DefaultListModel();
+	final	JList list2 = new JList(model2);
+	final	JScrollPane pane1 = new JScrollPane(list1);
+	final	JScrollPane pane2 = new JScrollPane(list2);
+	final	JLabel label1 = new JLabel();
+	final	JLabel label2 = new JLabel();
 		final JLabel goldAmount = new JLabel("Gold: "+i.getGold()+"");
 		final ArrayList<Inventoriable> temp = new ArrayList<Inventoriable>();
 		switch(o)

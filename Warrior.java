@@ -1,4 +1,5 @@
 
+import java.util.*;
 
 public class Warrior extends Hero {
 private static final int startStrength = 4;
@@ -19,5 +20,10 @@ public void levelUpCheck()
 	else intelligence++;
 	if(getXP()>Math.pow(2,getLvl())*coefficent)super.levelUP(5, 2, spirit, 1, intelligence,1);
 	//Health,strength,spirit,speed,intelligence,defense
+}
+public Warrior(int HP,int maxHP,int mana,int manafull,int lvl,int XP,int strength,int spirit,int intelligence,int speed,int defense,Chest c,Gloves g,Pants p,Helmet h,Weapon w,
+ArrayList<String> spells,int id,String name)
+{
+	super(type,HP,maxHP,mana,manafull,lvl,XP,strength,spirit,intelligence,speed,defense,c,g,p,h,w,spells,id,name);
 }
 }

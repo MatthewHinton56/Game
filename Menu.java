@@ -4,7 +4,8 @@ import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
+import java.io.*;
+import java.util.*;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,10 +25,12 @@ import javax.swing.event.ListSelectionListener;
 
 public class Menu {
 	private PlayerGroup p;
-	private Inventory i;
+final	private Inventory i;
+	private int floor;
 	private JFrame frame;
-	public Menu(PlayerGroup p,Inventory i)
+	public Menu(PlayerGroup p,Inventory i,int floor)
 	{
+		this.floor=floor;
 		this.p=p;
 		this.i=i;
 		frame = new JFrame("Menu");
@@ -42,22 +45,22 @@ public class Menu {
 		for(Inventoriable i: io)temp+=i+"\n";
 		tx.setText(temp);
 	}
-	public void makeMagic(int o)
+	public void makeMagic(int oo)
 	{
-		frame.setTitle("Magic");
-		JPanel panel = new JPanel();
-		JPanel panel2 = new JPanel();
+		final int o = oo;
+final		JPanel panel = new JPanel();
+final		JPanel panel2 = new JPanel();
 		panel2.setLayout(new GridLayout(1,2));
 		ArrayList<String>magicList = p.getHero(o).spellList;
-		DefaultListModel model1 = new DefaultListModel();
-		DefaultListModel model2 = new DefaultListModel();
+final		DefaultListModel model1 = new DefaultListModel();
+final		DefaultListModel model2 = new DefaultListModel();
 		panel.setLayout(new GridLayout(3,2));
-		JList list1 = new JList(model1);
-		JList list2 = new JList(model2);
-		JLabel label1 = new JLabel("Mana: "+p.getHero(o).mana);
-		JScrollPane scroll1 = new JScrollPane(list1);
-		JScrollPane scroll2 = new JScrollPane(list2);
-		JButton ret = new JButton("Return");
+final		JList list1 = new JList(model1);
+final		JList list2 = new JList(model2);
+final		JLabel label1 = new JLabel("Mana: "+p.getHero(o).mana);
+final		JScrollPane scroll1 = new JScrollPane(list1);
+final		JScrollPane scroll2 = new JScrollPane(list2);
+final		JButton ret = new JButton("Return");
 		for(String s:p.getHero(o).spellList)
 		{
 			if(Magic.isBlack(s))model1.addElement(s);
@@ -71,7 +74,7 @@ public class Menu {
 			makeMain();
 				
 			}});
-		JButton selectBlack = new JButton("Cast");
+final		JButton selectBlack = new JButton("Cast");
 		selectBlack.addActionListener(new ActionListener(){
 
 			@Override
@@ -85,7 +88,7 @@ public class Menu {
 				}
 				
 			}});
-		JButton selectWhite = new JButton("Cast");
+final		JButton selectWhite = new JButton("Cast");
 		selectWhite.addActionListener(new ActionListener(){
 
 			@Override
@@ -114,7 +117,7 @@ public class Menu {
 				}
 				
 			}});
-		JButton back = new JButton("<-");
+final		JButton back = new JButton("<-");
 		back.addActionListener(new ActionListener(){
 
 			@Override
@@ -126,7 +129,7 @@ public class Menu {
 				makeMagic(iO);
 			}});
 	
-	JButton forward = new JButton("->");
+final	JButton forward = new JButton("->");
 	forward.addActionListener(new ActionListener(){
 
 		@Override
@@ -141,35 +144,36 @@ public class Menu {
 		frame.setResizable(false);
 		panel.add(ret);panel.add(label1);panel2.add(scroll1);panel2.add(scroll2);panel.add(selectBlack);panel.add(selectWhite);panel.add(back);panel.add(forward);
 		frame.setLayout(new BorderLayout());
-		
+		frame.setTitle("Magic: "+p.getHero(o).getName());
 		frame.add(panel,BorderLayout.NORTH);frame.add(panel2,BorderLayout.CENTER);
 		frame.setVisible(true);
 	}
-	public void makeEquip(int o)
-	{	JLabel label1a = new JLabel("Chest:");
+	public void makeEquip(int oo)
+	{	final int o = oo;
+		JLabel label1a = new JLabel("Chest:");
 		JLabel label2a = new JLabel("Pants:");
 		JLabel label3a = new JLabel("Gloves:");
 		JLabel label4a = new JLabel("Helmet:");
 		JLabel label5a = new JLabel("Weapon");
 		
-		JLabel label1 = new JLabel(p.getHero(o).getChest().getStat());
-		JLabel label2 = new JLabel(p.getHero(o).getPants().getStat());
-		JLabel label3 = new JLabel(p.getHero(o).getGloves().getStat());
-		JLabel label4 = new JLabel(p.getHero(o).getHelmet().getStat());
-		JLabel label5 = new JLabel(p.getHero(o).getWeapon().getStat());
+final		JLabel label1 = new JLabel(p.getHero(o).getChest().getStat());
+final		JLabel label2 = new JLabel(p.getHero(o).getPants().getStat());
+final		JLabel label3 = new JLabel(p.getHero(o).getGloves().getStat());
+final		JLabel label4 = new JLabel(p.getHero(o).getHelmet().getStat());
+final		JLabel label5 = new JLabel(p.getHero(o).getWeapon().getStat());
 		frame.setTitle("Equip");
-		JPanel panel = new JPanel();
+final		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(6,4));
-		DefaultListModel model1 = new DefaultListModel();
-		JList list1 = new JList(model1);
-		DefaultListModel model2 = new DefaultListModel();
-		JList list2 = new JList(model2);
-		DefaultListModel model3 = new DefaultListModel();
-		JList list3 = new JList(model3);
-		DefaultListModel model4 = new DefaultListModel();
-		JList list4 = new JList(model4);
-		DefaultListModel model5 = new DefaultListModel();
-		JList list5 = new JList(model5);
+final		DefaultListModel model1 = new DefaultListModel();
+final		JList list1 = new JList(model1);
+final		DefaultListModel model2 = new DefaultListModel();
+final		JList list2 = new JList(model2);
+final		DefaultListModel model3 = new DefaultListModel();
+final		JList list3 = new JList(model3);
+final		DefaultListModel model4 = new DefaultListModel();
+final		JList list4 = new JList(model4);
+final		DefaultListModel model5 = new DefaultListModel();
+final		JList list5 = new JList(model5);
 		ArrayList<Inventoriable> chests = new ArrayList<Inventoriable>();
 		chests = i.getItemByType("Chest");
 		ArrayList<Inventoriable> pantss = new ArrayList<Inventoriable>();
@@ -180,7 +184,7 @@ public class Menu {
 		helmets = i.getItemByType("Helmet");
 		ArrayList<Inventoriable> weapons = new ArrayList<Inventoriable>();
 		weapons = i.getItemByType("Weapon");
-		JButton unEquip1 = new JButton("unequip");
+final		JButton unEquip1 = new JButton("unequip");
 		unEquip1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				Chest c = p.getHero(o).equipChest(null);
@@ -191,7 +195,7 @@ public class Menu {
 				if(p.getHero(o).getChest()!=null)label1.setText(p.getHero(o).getChest().getStat());
 				else label1.setText("Nothing");
 			}});
-		JButton unEquip2 = new JButton("unequip");
+final		JButton unEquip2 = new JButton("unequip");
 		unEquip2.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				Pants c = p.getHero(o).equipPants(null);
@@ -202,7 +206,7 @@ public class Menu {
 				if(p.getHero(o).getPants()!=null)label2.setText(p.getHero(o).getPants().getStat());
 				else label2.setText("Nothing");
 			}});
-		JButton unEquip3 = new JButton("unequip");
+final		JButton unEquip3 = new JButton("unequip");
 		unEquip3.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				Gloves c = p.getHero(o).equipGloves(null);
@@ -213,7 +217,7 @@ public class Menu {
 				if(p.getHero(o).getGloves()!=null)label3.setText(p.getHero(o).getGloves().getStat());
 				else label3.setText("Nothing");
 			}});
-		JButton unEquip4 = new JButton("unequip");
+final		JButton unEquip4 = new JButton("unequip");
 		unEquip4.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				Helmet c = p.getHero(o).equipHelmet(null);
@@ -224,7 +228,7 @@ public class Menu {
 				if(p.getHero(o).getHelmet()!=null)label4.setText(p.getHero(o).getHelmet().getStat());
 				else label4.setText("Nothing");
 			}});
-		JButton unEquip5 = new JButton("unequip");
+final		JButton unEquip5 = new JButton("unequip");
 		unEquip5.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				Weapon c = p.getHero(o).equipWeapon(null);
@@ -235,7 +239,7 @@ public class Menu {
 				if(p.getHero(o).getWeapon()!=null)label5.setText(p.getHero(o).getWeapon().getStat());
 				else label5.setText("Nothing");
 			}});
-		JButton ret = new JButton("return");
+final		JButton ret = new JButton("return");
 		ret.addActionListener(new ActionListener(){
 
 			@Override
@@ -243,8 +247,8 @@ public class Menu {
 				frame.remove(panel);
 				makeMain();		
 			}});
-		JButton back = new JButton("<-");
-		JButton forward = new JButton("->");
+final		JButton back = new JButton("<-");
+final		JButton forward = new JButton("->");
 		back.addActionListener(new ActionListener(){
 
 			@Override
@@ -263,7 +267,7 @@ public class Menu {
 			frame.remove(panel);
 			makeEquip(iO);
 		}});
-		JButton equip1 = new JButton("Equip");
+final		JButton equip1 = new JButton("Equip");
 		equip1.addActionListener(new ActionListener(){
 
 			@Override
@@ -279,7 +283,7 @@ public class Menu {
 				if(p.getHero(o).getChest()!=null)label1.setText(p.getHero(o).getChest().getStat());
 				else label1.setText("Nothing");
 			}});
-		JButton equip2 = new JButton("Equip");
+final		JButton equip2 = new JButton("Equip");
 		equip2.addActionListener(new ActionListener(){
 
 			@Override
@@ -295,7 +299,7 @@ public class Menu {
 				if(p.getHero(o).getPants()!=null)label2.setText(p.getHero(o).getPants().getStat());
 				else label2.setText("Nothing");
 			}});
-		JButton equip3 = new JButton("Equip");
+final		JButton equip3 = new JButton("Equip");
 		equip3.addActionListener(new ActionListener(){
 
 			@Override
@@ -311,7 +315,7 @@ public class Menu {
 				if(p.getHero(o).getGloves()!=null)label3.setText(p.getHero(o).getGloves().getStat());
 				else label3.setText("Nothing");
 			}});
-		JButton equip4 = new JButton("Equip");
+final		JButton equip4 = new JButton("Equip");
 		equip4.addActionListener(new ActionListener(){
 
 			@Override
@@ -327,7 +331,7 @@ public class Menu {
 				if(p.getHero(o).getHelmet()!=null)label4.setText(p.getHero(o).getHelmet().getStat());
 				else label4.setText("Nothing");
 			}});
-		JButton equip5 = new JButton("Equip");
+final		JButton equip5 = new JButton("Equip");
 		equip5.addActionListener(new ActionListener(){
 
 			@Override
@@ -348,22 +352,22 @@ public class Menu {
 		for(Inventoriable g:glovess)model3.addElement(g.getStat());
 		for(Inventoriable h:helmets)model4.addElement(h.getStat());
 		for(Inventoriable w:weapons)model5.addElement(w.getStat());
-		JScrollPane scroll1 = new JScrollPane(list1);
+final		JScrollPane scroll1 = new JScrollPane(list1);
 		scroll1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		JScrollPane scroll2 = new JScrollPane(list2);
+final		JScrollPane scroll2 = new JScrollPane(list2);
 		scroll1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		JScrollPane scroll3 = new JScrollPane(list3);
+final		JScrollPane scroll3 = new JScrollPane(list3);
 		scroll1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		JScrollPane scroll4 = new JScrollPane(list4);
+final		JScrollPane scroll4 = new JScrollPane(list4);
 		scroll1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		JScrollPane scroll5 = new JScrollPane(list5);
+final		JScrollPane scroll5 = new JScrollPane(list5);
 		scroll1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		panel.add(label1a);panel.add(label1);panel.add(unEquip1);panel.add(scroll1);panel.add(equip1);
 		panel.add(label2a);panel.add(label2);panel.add(unEquip2);panel.add(scroll2);panel.add(equip2);
 		panel.add(label3a);panel.add(label3);panel.add(unEquip3);panel.add(scroll3);panel.add(equip3);
 		panel.add(label4a);panel.add(label4);panel.add(unEquip4);panel.add(scroll4);panel.add(equip4);
 		panel.add(label5a);panel.add(label5);panel.add(unEquip5);panel.add(scroll5);panel.add(equip5);
-		panel.add(back);panel.add(new JLabel());panel.add(ret);panel.add(new JLabel());panel.add(forward);
+		panel.add(back);panel.add(new JLabel(""+this.p.getHero(o).getName()));panel.add(ret);panel.add(new JLabel());panel.add(forward);
 		frame.add(panel);
 		frame.setVisible(true);
 	}
@@ -371,22 +375,22 @@ public class Menu {
 	{
 		frame.setTitle("Inventory");
 		//frame.setLayout(new BorderLayout());
-		JPanel panel = new JPanel();
-		JPanel panel2 = new JPanel();
+final		JPanel panel = new JPanel();
+final		JPanel panel2 = new JPanel();
 		panel2.setLayout(new BorderLayout());
 		panel2.add(panel,BorderLayout.NORTH);
-		JTextArea tx = new JTextArea();
+final		JTextArea tx = new JTextArea();
 		tx.setVisible(true);
 		tx.setEditable(false);
 		//JScrollPane scrPane = new JScrollPane(tx);
 		GridLayout layout = new GridLayout(2,3);
 		panel.setLayout(layout);
-		ArrayList<Inventoriable> items = new ArrayList<Inventoriable>();
+final	ArrayList<Inventoriable> items = new ArrayList<Inventoriable>();
 		for(int k = 0;k<i.getInventorySize();k++)
 		{
 		items.add(i.getItem(k));
 		}
-		JButton sortName = new JButton("Sort by Name");
+final		JButton sortName = new JButton("Sort by Name");
 		sortName.addActionListener(new ActionListener(){
 
 			@Override
@@ -399,7 +403,7 @@ public class Menu {
 				}
 				setInventoryContents(items,tx);
 			}});
-		JButton sortPrice = new JButton("Sort by Price");
+final		JButton sortPrice = new JButton("Sort by Price");
 		sortPrice.addActionListener(new ActionListener(){
 
 			@Override
@@ -413,7 +417,7 @@ public class Menu {
 				}
 				setInventoryContents(items,tx);	
 			}});
-		JButton sortType = new JButton("Sort by Type");
+final		JButton sortType = new JButton("Sort by Type");
 		sortType.addActionListener(new ActionListener(){
 
 			@Override
@@ -427,7 +431,7 @@ public class Menu {
 				}
 				setInventoryContents(items,tx);		
 			}});
-		JButton ret = new JButton("Return");
+final		JButton ret = new JButton("Return");
 		ret.addActionListener(new ActionListener(){
 
 			@Override
@@ -435,7 +439,7 @@ public class Menu {
 				frame.remove(panel2);
 				makeMain();		
 			}});
-		JScrollPane scroll = new JScrollPane(tx);
+final		JScrollPane scroll = new JScrollPane(tx);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		panel.add(ret);
 		panel.add(new JLabel("Gold: "));
@@ -449,11 +453,12 @@ public class Menu {
 		frame.add(panel2);
 		frame.setVisible(true);
 	}
-	public void makeStatus(int i)
-	{ Hero h = p.getHero(i);
+	public void makeStatus(int io)	
+	{ final int i = io; 
+		Hero h = p.getHero(i);
 		frame.setTitle("Status");
-		JPanel panel = new JPanel();
-		GridLayout layout = new GridLayout(16,2);
+final		JPanel panel = new JPanel();
+final		GridLayout layout = new GridLayout(16,2);
 		panel.setLayout(layout);
 		JLabel hero1a = new JLabel("   "+h.getName());
 		JLabel hero2a = new JLabel("Class: ");
@@ -485,7 +490,7 @@ public class Menu {
 		JLabel hero15a = new JLabel("Mana: ");
 		JLabel hero15b = new JLabel(h.mana+"/"+h.manafull);
 		
-		JButton ret = new JButton("Return");
+	final	JButton ret = new JButton("Return");
 		ret.addActionListener(new ActionListener(){
 
 			@Override
@@ -494,7 +499,7 @@ public class Menu {
 				
 				makeMain();		
 			}});
-		JButton back = new JButton("<-");
+final		JButton back = new JButton("<-");
 		back.addActionListener(new ActionListener(){
 
 			@Override
@@ -505,7 +510,7 @@ public class Menu {
 				makeStatus(iO);
 			}});
 	
-	JButton forward = new JButton("->");
+final	JButton forward = new JButton("->");
 	forward.addActionListener(new ActionListener(){
 
 		@Override
@@ -552,7 +557,7 @@ public class Menu {
 }
 	public void makeMain()
 	{	frame.setTitle("Main Menu");
-		JPanel panel = new JPanel();
+	final	JPanel panel = new JPanel();
 		JLabel hero1a = new JLabel(p.getHero(0).getName());
 		JLabel hero1b = new JLabel(p.getHero(0).getHP()+"/"+p.getHero(0).getMaxHP()+" HP");
 		JLabel hero1c = new JLabel(p.getHero(0).getXP()+"/"+(Math.pow(2,p.getHero(0).getLvl())*Hero.coefficent)+" XP");
@@ -569,10 +574,10 @@ public class Menu {
 		JLabel hero4b = new JLabel(p.getHero(3).getHP()+"/"+p.getHero(3).getMaxHP()+" HP");
 		JLabel hero4c = new JLabel(p.getHero(3).getXP()+"/"+(Math.pow(2,p.getHero(3).getLvl())*Hero.coefficent)+" XP");
 		JLabel hero4d = new JLabel(p.getHero(3).getLvl()+" lvl");
-		JButton status = new JButton("Status");
-		JButton inventory = new JButton("Inventory");
-		JButton equip = new JButton("Equip");
-		JButton magic = new JButton("Magic");
+final		JButton status = new JButton("Status");
+final		JButton inventory = new JButton("Inventory");
+final		JButton equip = new JButton("Equip");
+final		JButton magic = new JButton("Magic");
 		magic.addActionListener(new ActionListener(){
 
 			@Override
@@ -610,13 +615,28 @@ public class Menu {
 		JMenuBar menu = new JMenuBar();
 		JMenu file = new JMenu("File");
 		JMenuItem save = new JMenuItem("Save");
+		final Inventory io = i;
 		save.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				try{
+				
+				String file = JOptionPane.showInputDialog("Enter File Name:");
+				PrintStream print  = new PrintStream(new File(file));
+				print.println(floor);
+				for(int i = 0;i<4;i++)print.println(p.getHero(i).save());
+				print.println(io.save());
+				print.close();
+				}
+				catch(IOException ee)
+				{
+					
+				}
 				
 				
 			}});
+			
 		file.add(save);
 		menu.add(file);
 		frame.setJMenuBar(menu);

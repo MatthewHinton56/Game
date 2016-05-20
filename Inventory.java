@@ -7,6 +7,13 @@ private int gold;
 		inventory =  new ArrayList<Inventoriable>();
 		gold = 0;
 	}
+	public String save()
+	{
+		String temp = ""+gold+"\n";
+		temp+=inventory.size();
+		for(Inventoriable i:inventory){temp+="\n"+i.save();}
+		return temp;
+	}
 	public void addGold(int gold)
 	{
 		this.gold+=gold;

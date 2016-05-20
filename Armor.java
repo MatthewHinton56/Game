@@ -53,5 +53,9 @@ private String name,type;
 	{
 		return "Name:" + name+" Type:"+type+" Price:"+price;
 	}
+	public String save()
+	{
+		return type + " "+ HP+" "+defense+" "+price+" "+name;
+	}
     
 }

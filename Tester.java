@@ -29,6 +29,7 @@ public class Tester {
 		//world.add(new Location(1,2) new Actor());
 		
 		new GameMaster();
+		
 	}
 
 }

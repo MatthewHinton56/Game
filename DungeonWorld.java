@@ -287,7 +287,7 @@ public Actor[][] getConfig()
 }
 public void makeMenu()
 {
-	new Menu(p,i);
+	new Menu(p,i,floorLevel);
 }
 public String getType(){return type;}
 public int getX(){return x;}public int getY(){return y;}public int getLevel(){return floorLevel;}

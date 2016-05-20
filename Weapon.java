@@ -29,4 +29,8 @@ public String toString()
 {
 	return "Name:" + name+" Type:"+type+" Price:"+price;
 }
+public String save()
+{
+	return type+" "+damage+" "+name+" "+price;
+}
 }

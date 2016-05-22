@@ -202,6 +202,7 @@ public class WorldFrame<T> extends JFrame
         pack();
         repaint(); // to show message
         display.setGrid(gr);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public void repaint()

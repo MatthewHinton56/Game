@@ -72,6 +72,7 @@ public class World<T>
             frame = new WorldFrame<T>(this);
             if(getType().equals("Dungeon"))frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
             frame.setVisible(true);
+            ((WorldFrame<T>) frame).control.run();
         }
         else
             frame.repaint();
@@ -94,6 +95,10 @@ public class World<T>
 		
 	}
 	public void setSelectionD()
+	{
+		
+	}
+	public void setSelectionM()
 	{
 		
 	}

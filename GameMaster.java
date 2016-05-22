@@ -65,8 +65,9 @@ private boolean complete;
 			Helmet h = null;
 			ArrayList<String> spells = new ArrayList<String>();
 			String type = in.nextLine();
+			//System.out.println(type);
 			String name = in.nextLine();
-			System.out.println(type);
+			//System.out.println(name);
 			int hp = in.nextInt();
 			int maxhp = in.nextInt();
 			int mana = in.nextInt();
@@ -78,12 +79,12 @@ private boolean complete;
 			int intelligence = in.nextInt();
 			int speed = in.nextInt();
 			int defense = in.nextInt();
-			System.out.println(defense);
+			//System.out.println(defense);
 			in.nextLine();
 			for(int q = 0;q<5;q++)
 			{
 				String temp = in.nextLine();
-				System.out.println(temp);
+				//System.out.println(temp);
 				Scanner item = new Scanner(temp);
 				String typeI = item.next();
 				if(typeI!= null)
@@ -99,11 +100,17 @@ private boolean complete;
 					}
 				}
 			}
-			if(in.nextInt()>0)
+			int spellsC = in.nextInt();
+			in.nextLine();
+			//System.out.println(spellsC);
+			if(spellsC>0)
 			{
-				Scanner item = new Scanner(in.nextLine());
+				//System.out.println(in.nextLine());
+				//System.out.println(in.nextLine());
+				Scanner item  = new Scanner(in.nextLine());
 				while(item.hasNext())spells.add(item.next());
 			}
+			else System.out.println(in.nextLine());
 			switch(type)
 			{
 				case Warrior.type: this.p.addHero(new Warrior(hp,maxhp,mana,manafull,lvl,xp,strength,spirit,intelligence,speed,defense,c,g,p,h,w,spells,i,name));break;
@@ -113,8 +120,8 @@ private boolean complete;
 				case GrayMage.type: this.p.addHero(new GrayMage(hp,maxhp,mana,manafull,lvl,xp,strength,spirit,intelligence,speed,defense,c,g,p,h,w,spells,i,name));break;
 				case BlackMage.type: this.p.addHero(new BlackMage(hp,maxhp,mana,manafull,lvl,xp,strength,spirit,intelligence,speed,defense,c,g,p,h,w,spells,i,name));break;
 			}
-			System.out.print(this.p.getHero(i).save());
-			System.out.println(in.nextLine());
+			//System.out.print(this.p.getHero(i).save());
+			//System.out.println(spells);
 		}
 		this.i.addGold(Integer.parseInt(in.nextLine()));
 		int count = in.nextInt();

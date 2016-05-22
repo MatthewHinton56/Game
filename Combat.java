@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import info.gridworld.actor.Actor;
+import info.gridworld.grid.Location;
 import info.gridworld.gui.WorldFrame;
 
 public class Combat {
@@ -43,7 +44,7 @@ public CombatWorld cw;
 		place = 0;
 		cw = new CombatWorld(this);
 		cw.frame.setEnabled(true);
-		
+		if(unit.get(0) instanceof Hero){cw.getGrid().remove(BattleGrid.playerLoc[unit.get(place).id()]);cw.getGrid().put(BattleGrid.playerActiveLoc[unit.get(place).id()], new Actor());}
 	}
 	public void execute(String move,int index)
 	{
@@ -75,9 +76,14 @@ public CombatWorld cw;
 			cw.frame.setEnabled(false);
 			cw.frame.dispose();
 			}
+			cw.getGrid().remove(BattleGrid.playerActiveLoc[unit.get(place).id()]);
+			cw.getGrid().put(BattleGrid.playerLoc[unit.get(place).id()], new Actor());
 			place++;
-			if(place==6)place=0;
+			if(place==unit.size())place=0;
+			while(unit.get(place).checkDead()){place++;
+			if(place==unit.size())place=0;}
 			if(unit.get(place) instanceof Enemy && !unit.get(place).checkDead())execute();
+			else {cw.getGrid().remove(BattleGrid.playerLoc[unit.get(place).id()]);cw.getGrid().put(BattleGrid.playerActiveLoc[unit.get(place).id()], new Actor());}
 	}
 	public void execute(String move,int index,String magic)
 	{
@@ -131,22 +137,46 @@ public CombatWorld cw;
 			cw.frame.setEnabled(false);
 			cw.frame.dispose();
 			}
+			cw.remove(BattleGrid.playerActiveLoc[unit.get(place).id()]);
+			cw.add(BattleGrid.playerLoc[unit.get(place).id()], new Actor());
 			place++;
 			if(place==6)place=0;
+			while(unit.get(place).checkDead()){place++;
+			if(place==unit.size())place=0;}
 			if(unit.get(place) instanceof Enemy && !unit.get(place).checkDead())execute();
+			else {cw.getGrid().remove(BattleGrid.playerLoc[unit.get(place).id()]);cw.getGrid().put(BattleGrid.playerActiveLoc[unit.get(place).id()], new Actor());}
 	}
-	public void execute()
+	public String execute()
 	{
 		Units u;String move;
+		//int index = unit.get(place).id();
 		if(unit.get(place).getHP()<unit.get(place).getMaxHP()/2&& Math.random()>.5)move="defend";
 		else move="attack";
 		int i = ((int)(Math.random()*4));
 		u = p.getHero(i);
 		int damage = unit.get(place).play(u, move);
-		if(move.equals("attack"))cw.setMessage(((Enemy)unit.get(place)).getName()+" deals "+damage+" damage");
+		String text = unit.get(place).getName()+" defended";
+		if(move.equals("attack"))text = ((Enemy)unit.get(place)).getName()+" deals "+damage+" damage to"+p.getHero(i).getName();
+		int temp = place;
+		//cw.add(new Location(0,unit.get(place).id()),new DisplayController(cw,text,index));
+		System.out.println(((Enemy)unit.get(place)).getName()+" deals "+damage+" damage to"+p.getHero(i).getName());
+		if(p.getHero(i).checkDead())cw.getGrid().remove(BattleGrid.playerLoc[i]);
 		place++;
-		if(place==6)place=0;
-		if(unit.get(place) instanceof Enemy)execute();
+		if(place==unit.size())place=0;
+		while(unit.get(place).checkDead()){place++;
+		if(place==unit.size())place=0;}
+		if(unit.get(place) instanceof Enemy)text+=execute();
+		else {cw.getGrid().remove(BattleGrid.playerLoc[unit.get(place).id()]);cw.getGrid().put(BattleGrid.playerActiveLoc[unit.get(place).id()], new Actor());}
+		int index = unit.get(temp).id();
+		cw.add(new Location(0,unit.get(temp).id()),new DisplayController(cw,text,index));
+		return "\n"+text;
+	}
+	public boolean executeI(String text,int index)
+	{	DisplayController comp = new DisplayController(cw, text, index);
+	int dummy = 0;
+		cw.add(new Location(0,unit.get(place).id()), comp);
+		while(comp.getCount()<4);
+		return true;
 	}
 	public PlayerGroup getPlayers() {
 		return p;
@@ -162,4 +192,13 @@ public CombatWorld cw;
 	{
 		return unit;
 	}
+	public static int fibonnaci(int n)
+	{
+		if(n==1 || n == 2)return 1;
+		return fibonnaci(n-1)+fibonnaci(n-2);
+	}
+	//public static void main(String args[])
+	//{
+	//	System.out.println(fibonnaci(10));
+	//}
 }

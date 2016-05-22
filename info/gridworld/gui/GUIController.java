@@ -63,6 +63,8 @@ public class GUIController<T>
     private Set<Class> occupantClasses;
     private String type;
 
+	private JButton magic;
+
     /**
      * Creates a new controller tied to the specified display and gui
      * frame.
@@ -110,7 +112,7 @@ public class GUIController<T>
                 step();
             }
         });
-
+        timer.setDelay(10);
         display.addMouseListener(new MouseAdapter()
         {
             public void mousePressed(MouseEvent evt)
@@ -134,8 +136,8 @@ public class GUIController<T>
     {
         parentFrame.getWorld().step();
         parentFrame.repaint();
-        if (++numStepsSoFar == numStepsToRun)
-            stop();
+        //if (++numStepsSoFar == numStepsToRun)
+           // stop();
         Grid<T> gr = parentFrame.getWorld().getGrid();
 
         for (Location loc : gr.getOccupiedLocations())
@@ -201,6 +203,7 @@ public class GUIController<T>
         attack = new JButton("Attack");
         defend = new JButton("Defend");
         menu = new JButton("Menu");
+        magic = new JButton("Magic");
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));
         controlPanel.setBorder(BorderFactory.createEtchedBorder());
         
@@ -221,7 +224,57 @@ public class GUIController<T>
         controlPanel.add(Box.createRigidArea(spacer));
         controlPanel.add(defend);
         controlPanel.add(Box.createRigidArea(spacer));
+        controlPanel.add(magic);
+        controlPanel.add(Box.createRigidArea(spacer));
         controlPanel.remove(menu);
+        runButton = new JButton(resources.getString("button.gui.run"));
+        stopButton = new JButton(resources.getString("button.gui.stop"));
+        
+        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));
+        controlPanel.setBorder(BorderFactory.createEtchedBorder());
+        
+        controlPanel.add(Box.createRigidArea(spacer));
+        controlPanel.add(runButton);
+        controlPanel.add(Box.createRigidArea(spacer));
+        runButton.setEnabled(true);
+
+        controlPanel.add(Box.createRigidArea(spacer));
+        controlPanel.add(new JLabel(resources.getString("slider.gui.slow")));
+        JSlider speedSlider = new JSlider(MIN_DELAY_MSECS, MAX_DELAY_MSECS,
+                INITIAL_DELAY);
+        speedSlider.setInverted(true);
+        speedSlider.setPreferredSize(new Dimension(100, speedSlider
+                .getPreferredSize().height));
+        speedSlider.setMaximumSize(speedSlider.getPreferredSize());
+
+        // remove control PAGE_UP, PAGE_DOWN from slider--they should be used
+        // for zoom
+        InputMap map = speedSlider.getInputMap();
+        while (map != null)
+        {
+            map.remove(KeyStroke.getKeyStroke("control PAGE_UP"));
+            map.remove(KeyStroke.getKeyStroke("control PAGE_DOWN"));
+            map = map.getParent();
+        }
+
+        controlPanel.add(speedSlider);
+        controlPanel.add(new JLabel(resources.getString("slider.gui.fast")));
+        controlPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+        runButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                run();
+            }
+        });
+        speedSlider.addChangeListener(new ChangeListener()
+        {
+            public void stateChanged(ChangeEvent evt)
+            {
+                timer.setDelay(((JSlider) evt.getSource()).getValue());
+                System.out.println(((JSlider) evt.getSource()).getValue());
+            }
+        });
 			}
         attack.addActionListener(new ActionListener()
         {
@@ -231,6 +284,19 @@ public class GUIController<T>
         	{
         		parentFrame.getWorld().setMessage("a");	
         	parentFrame.getWorld().setSelectionA();
+        	}
+        	catch(Exception i){}
+
+            }
+        });
+        magic.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+			try
+        	{
+        		parentFrame.getWorld().setMessage("m");	
+        	parentFrame.getWorld().setSelectionM();
         	}
         	catch(Exception i){}
 
@@ -256,6 +322,7 @@ public class GUIController<T>
 		        controlPanel.add(Box.createRigidArea(spacer));
 		        controlPanel.remove(attack);
 		        controlPanel.remove(defend);
+		        controlPanel.remove(magic);
 		        menu.addActionListener(new ActionListener()
 		        {
 		            public void actionPerformed(ActionEvent e)

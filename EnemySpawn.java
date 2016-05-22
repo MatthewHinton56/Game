@@ -8,7 +8,7 @@ private EnemyGroup e;
 		case 1:
 		break;
 		}*/
-		e = (EnemyGroup)StandardEnemies.goblins2.clone();
+		e = (EnemyGroup)StandardEnemies.goblins4.clone();
 	}
 	public EnemyGroup getEnemy()
 	{

@@ -11,4 +11,6 @@ public class Character extends Actor {
 		moveTo(new Location(y,x));
 	}
 	public String toString(){return "p";}
+	
+	
 }

@@ -2,8 +2,10 @@
 import java.util.concurrent.TimeUnit;
 
 import info.gridworld.actor.ActorWorld;
+import info.gridworld.actor.Bug;
 import info.gridworld.grid.*;
 import info.gridworld.world.World;
+import info.gridworld.actor.Actor;
 public class CombatWorld<Actor> extends ActorWorld {
 private Combat c;
 private String selection,magic;
@@ -16,6 +18,7 @@ private BattleGrid g;
     	show();
     	selection="";
     	magic = "";
+    	//this.add(new Location(0,0),(info.gridworld.actor.Actor) new info.gridworld.actor.Actor());
     }
     public boolean locationClicked(Location loc)
     {	//this.setMessage("Hello");

@@ -88,8 +88,8 @@ public String save()
 	else temp+="\nnull";
 	if(weapon!=null)temp+="\n"+weapon.save();
 	else temp+="\nnull";
-	temp+="\n"+spellList.size();
-	for(String s:spellList)temp+="\n"+s;
+	temp+="\n"+spellList.size()+"\n";
+	for(String s:spellList)temp+=s+" ";
 	return temp;
 }
 public Chest equipChest(Chest c)

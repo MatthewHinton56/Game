@@ -72,11 +72,11 @@ public class ActorWorld extends World<Actor>
     /**
      * Adds an actor to this world at a given location.
      * @param loc the location at which to add the actor
-     * @param occupant the actor to add
+     * @param actor the actor to add
      */
-    public void add(Location loc, Actor occupant)
+    public void add(Location loc, Actor actor)
     {
-        occupant.putSelfInGrid(getGrid(), loc);
+        actor.putSelfInGrid(getGrid(), loc);
     }
 
     /**

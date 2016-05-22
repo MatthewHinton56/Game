@@ -1,5 +1,6 @@
 
 import info.gridworld.actor.*;
+import info.gridworld.grid.BoundedGrid;
 import info.gridworld.grid.Location;
 import info.gridworld.actor.ActorWorld;
 public class Tester {
@@ -27,7 +28,6 @@ public class Tester {
 		//Combat simulator =  new Combat(StandardEnemies.goblins2,p, inventory);
 		//new DungeonWorld(1,p,inventory);
 		//world.add(new Location(1,2) new Actor());
-		
 		new GameMaster();
 		
 	}

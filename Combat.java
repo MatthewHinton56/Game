@@ -2,6 +2,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import info.gridworld.actor.Actor;
 import info.gridworld.grid.Location;
 import info.gridworld.gui.WorldFrame;
@@ -45,6 +47,7 @@ public CombatWorld cw;
 		cw = new CombatWorld(this);
 		cw.frame.setEnabled(true);
 		if(unit.get(0) instanceof Hero){cw.getGrid().remove(BattleGrid.playerLoc[unit.get(place).id()]);cw.getGrid().put(BattleGrid.playerActiveLoc[unit.get(place).id()], new Actor());}
+		if(unit.get(0) instanceof Enemy)execute();
 	}
 	public void execute(String move,int index)
 	{
@@ -59,7 +62,7 @@ public CombatWorld cw;
 				}
 				u=e.get(index);
 			int damage = unit.get(place).play(u, move);
-			if(!move.equals("d"))cw.setMessage(((Hero)unit.get(place)).getName()+" deals "+damage+" damage");
+			if(!move.equals("d"))cw.setMessage(((Hero)unit.get(place)).getName()+" deals "+damage+" damage to "+u.getName());
 			unit.get(place).reset();
 			if(u.checkDead())
 			{
@@ -146,37 +149,51 @@ public CombatWorld cw;
 			if(unit.get(place) instanceof Enemy && !unit.get(place).checkDead())execute();
 			else {cw.getGrid().remove(BattleGrid.playerLoc[unit.get(place).id()]);cw.getGrid().put(BattleGrid.playerActiveLoc[unit.get(place).id()], new Actor());}
 	}
+	private static final ArrayList<Integer> enemies = new ArrayList<Integer>();
 	public String execute()
-	{
+	{	
 		Units u;String move;
 		//int index = unit.get(place).id();
 		if(unit.get(place).getHP()<unit.get(place).getMaxHP()/2&& Math.random()>.5)move="defend";
 		else move="attack";
 		int i = ((int)(Math.random()*4));
 		u = p.getHero(i);
+		while(u.checkDead())
+		{
+			 i = ((int)(Math.random()*4));
+			u = p.getHero(i);
+		}
 		int damage = unit.get(place).play(u, move);
 		String text = unit.get(place).getName()+" defended";
-		if(move.equals("attack"))text = ((Enemy)unit.get(place)).getName()+" deals "+damage+" damage to"+p.getHero(i).getName();
-		int temp = place;
+		if(move.equals("attack"))text = ((Enemy)unit.get(place)).getName()+" deals "+damage+" damage to "+p.getHero(i).getName();
+		int index = unit.get(place).id();
+		enemies.add(index);
+		System.out.println(unit.get(place).id());
 		//cw.add(new Location(0,unit.get(place).id()),new DisplayController(cw,text,index));
-		System.out.println(((Enemy)unit.get(place)).getName()+" deals "+damage+" damage to"+p.getHero(i).getName());
+		//System.out.println(((Enemy)unit.get(place)).getName()+" deals "+damage+" damage to"+p.getHero(i).getName());
 		if(p.getHero(i).checkDead())cw.getGrid().remove(BattleGrid.playerLoc[i]);
+		if(p.checkDead())
+		{
+			JOptionPane.showMessageDialog(null, "You died on floor "+dW.getLevel());
+			cw.frame.dispose();		
+		}
+		else
+		{
 		place++;
 		if(place==unit.size())place=0;
 		while(unit.get(place).checkDead()){place++;
 		if(place==unit.size())place=0;}
-		if(unit.get(place) instanceof Enemy)text+=execute();
+		if(unit.get(place) instanceof Enemy){text+=execute();}
 		else {cw.getGrid().remove(BattleGrid.playerLoc[unit.get(place).id()]);cw.getGrid().put(BattleGrid.playerActiveLoc[unit.get(place).id()], new Actor());}
-		int index = unit.get(temp).id();
-		cw.add(new Location(0,unit.get(temp).id()),new DisplayController(cw,text,index));
+		if(index == enemies.get(0))
+		{
+		System.out.println(enemies);
+		cw.add(new Location(0,0),new DisplayController(cw,text,enemies));
+		enemies.clear();
+		}
+		}
+		//System.out.println(text);
 		return "\n"+text;
-	}
-	public boolean executeI(String text,int index)
-	{	DisplayController comp = new DisplayController(cw, text, index);
-	int dummy = 0;
-		cw.add(new Location(0,unit.get(place).id()), comp);
-		while(comp.getCount()<4);
-		return true;
 	}
 	public PlayerGroup getPlayers() {
 		return p;

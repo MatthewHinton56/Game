@@ -16,6 +16,7 @@ private PlayerGroup p;
 private int x,y,floorLevel;
 private DungeonGrid g;
 private Combat c;
+private boolean exited;
 public GameMaster gm;
 private static final String type = "Dungeon";
 private static final Location[] doorLoc = new Location[]{new Location(3,6),new Location(9,6),new Location(15,6),
@@ -72,6 +73,7 @@ private static final int[][] startLoc = new int[][]{
 		setUpRooms();
 		setFocus(3,9);	
 			x=3;y=9;
+		exited = false;	
     	System.setProperty("info.gridworld.gui.selection", "hide"); // doesn’t show cell selection
 		System.setProperty("info.gridworld.gui.tooltips", "hide"); // doesn’t show tooltips
 		//System.setProperty("info.gridworld.gui.frametitle", "Dungeon"); // set your own title
@@ -151,6 +153,7 @@ private static final int[][] startLoc = new int[][]{
     }
      public boolean keyPressed(String description, Location loc)
     {if(c== null || c.over==true){
+    	if(description.equals("M"))new Menu(p,i,floorLevel);
         if(description.equals("RIGHT")||description.equals("D")){
         	if(floor[y][x+1] instanceof EnemySpawn)
         	{
@@ -167,9 +170,10 @@ private static final int[][] startLoc = new int[][]{
         		
         		
         	}
-        	else if(floor[y][x+1] instanceof Exit)
+        	else if(floor[y][x+1] instanceof Exit && !exited)
             {System.out.print("Exit move");
             	gm.setLevel(gm.getLevel()+1);
+            	exited = true;
             	//this.setGrid(null);
             	//reset(gm.getLevel());
             	new DungeonWorld(gm.getLevel(),p,i,gm);
@@ -194,9 +198,10 @@ private static final int[][] startLoc = new int[][]{
         		
         		
         	}
-        	else if(floor[y][x-1] instanceof Exit)
+        	else if(floor[y][x-1] instanceof Exit&& !exited)
             {System.out.print("Exit move");
             	gm.setLevel(gm.getLevel()+1);
+            	exited = true;
             	//this.setGrid(null);
             	//reset(gm.getLevel());
             	new DungeonWorld(gm.getLevel(),p,i,gm);
@@ -219,9 +224,10 @@ private static final int[][] startLoc = new int[][]{
         		frame.dispose();
         		frame.setEnabled(false);
         	}
-        	else	if(floor[y+1][x] instanceof Exit)
+        	else	if(floor[y+1][x] instanceof Exit && !exited)
             {System.out.print("Exit move");
             	gm.setLevel(gm.getLevel()+1);
+            	exited = true;
             	//this.setGrid(null);
             	//reset(gm.getLevel());
             	new DungeonWorld(gm.getLevel(),p,i,gm);
@@ -244,10 +250,11 @@ private static final int[][] startLoc = new int[][]{
         		frame.dispose();
         		frame.setEnabled(false);
         	}
-        	else if(floor[y-1][x] instanceof Exit)
+        	else if(floor[y-1][x] instanceof Exit && !exited)
             {
         		System.out.print("Exit move");
             	gm.setLevel(gm.getLevel()+1);
+            	exited = true;
             	//this.setGrid(null);
             	//reset(gm.getLevel());
             	new DungeonWorld(gm.getLevel(),p,i,gm);

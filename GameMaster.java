@@ -27,7 +27,7 @@ private boolean complete;
 		i = new Inventory();
 		p = new PlayerGroup();
 		complete = true;
-		level = 0;
+		level = 1;
 		mainMenu();
 //		i.addItem(new Chest(0,0,0, "test1"));
 //		i.addItem(new Chest(0,0,0, "test2"));
@@ -150,6 +150,7 @@ private boolean complete;
 	//private ButtonGroup radars;
 	private void mainMenu()
 	{	final JFrame frame = new JFrame("Main Menu");
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 final	JPanel panel = new JPanel();
 final		JButton reSelect= new JButton("Play");
 		 reSelect.setSize(100, 50);
@@ -189,7 +190,7 @@ final		 JButton confirm= new JButton("High Scores");
 	{
 final		JFrame frame = new JFrame("Select Heros");
 final		JPanel panel = new JPanel();
-			
+frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 final		JTextField name = new JTextField();
 final		JRadioButton rogue = new JRadioButton("Rogue");
@@ -216,7 +217,7 @@ final		ButtonGroup group = new ButtonGroup();
 				warrior.setSelected(true);
 				count++;
 				if(count==3)select.setText("Finish");
-				if(count==4){confirm();frame.dispose();}
+				if(count==4){confirm();count=0;frame.dispose();}
 			}
 			
 			
@@ -247,6 +248,7 @@ final		ButtonGroup group = new ButtonGroup();
 	private void confirm()
 	{
 final		JFrame frame = new JFrame("Confirm");
+frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 final		JLabel hero1 = new JLabel(p.getHero(0).getName()+": "+p.getHero(0).getType()+" HP: "+p.getHero(0).getMaxHP());
 final		JLabel hero2 = new JLabel(p.getHero(1).getName()+": "+p.getHero(1).getType()+" HP: "+p.getHero(1).getMaxHP());
 final		JLabel hero3 = new JLabel(p.getHero(2).getName()+": "+p.getHero(2).getType()+" HP: "+p.getHero(2).getMaxHP());

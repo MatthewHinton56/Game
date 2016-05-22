@@ -61,6 +61,7 @@ import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+import javax.swing.text.DefaultCaret;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -81,7 +82,7 @@ public class WorldFrame<T> extends JFrame
     private World<T> world;
     private ResourceBundle resources;
     private DisplayMap displayMap;
-
+    private DefaultCaret caret;
     private Set<Class> gridClasses;
     private JMenu newGridMenu;
 
@@ -196,7 +197,9 @@ public class WorldFrame<T> extends JFrame
         messageArea.setFocusable(false);
         messageArea.setBackground(new Color(0xFAFAD2));
         JScrollPane scroll1 = new JScrollPane(messageArea);
-        scroll1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scroll1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+         caret = (DefaultCaret)messageArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
         content.add(scroll1, BorderLayout.NORTH);
       	control.run();
         pack();
@@ -211,8 +214,9 @@ public class WorldFrame<T> extends JFrame
         if (message == null)
             message = resources.getString("message.default");
         messageArea.setText(message);
-        messageArea.repaint();
-        display.repaint(); // for applet
+        //amessageArea.repaint();
+        //display.repaint(); // for applet
+        
         super.repaint();
     }
 

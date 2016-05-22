@@ -112,7 +112,7 @@ public class GUIController<T>
                 step();
             }
         });
-        timer.setDelay(10);
+        timer.setDelay(900);
         display.addMouseListener(new MouseAdapter()
         {
             public void mousePressed(MouseEvent evt)
@@ -232,7 +232,7 @@ public class GUIController<T>
         
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));
         controlPanel.setBorder(BorderFactory.createEtchedBorder());
-        
+        /*
         controlPanel.add(Box.createRigidArea(spacer));
         controlPanel.add(runButton);
         controlPanel.add(Box.createRigidArea(spacer));
@@ -274,7 +274,7 @@ public class GUIController<T>
                 timer.setDelay(((JSlider) evt.getSource()).getValue());
                 System.out.println(((JSlider) evt.getSource()).getValue());
             }
-        });
+        });*/
 			}
         attack.addActionListener(new ActionListener()
         {

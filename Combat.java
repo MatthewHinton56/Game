@@ -109,9 +109,6 @@ public CombatWorld cw;
 			else if(Magic.isWhite(magic))
 			{
 				int heal  = Magic.whiteSolo((Hero)unit.get(place), p.getHero(index), magic);
-				if(heal!=0)
-				cw.setMessage(unit.get(place).getName()+" casts "+magic+" and heals all allies for "+heal);
-				else
 				cw.setMessage(unit.get(place).getName()+" casts "+magic+" on "+p.getHero(index).getName());	
 			}
 			else
@@ -150,7 +147,11 @@ public CombatWorld cw;
 			else {cw.getGrid().remove(BattleGrid.playerLoc[unit.get(place).id()]);cw.getGrid().put(BattleGrid.playerActiveLoc[unit.get(place).id()], new Actor());}
 	}
 	private static final ArrayList<Integer> enemies = new ArrayList<Integer>();
-	public String execute()
+	private static final ArrayList<String> moves = new ArrayList<String>();
+	private static final ArrayList<String> textes = new ArrayList<String>();
+	private static final ArrayList<Units> enemy = new ArrayList<Units>();
+	private static final ArrayList<Units> targets = new ArrayList<Units>();
+	public void execute()
 	{	
 		Units u;String move;
 		//int index = unit.get(place).id();
@@ -158,14 +159,18 @@ public CombatWorld cw;
 		else move="attack";
 		int i = ((int)(Math.random()*4));
 		u = p.getHero(i);
+		targets.add(u);
+		moves.add(move);
 		while(u.checkDead())
 		{
 			 i = ((int)(Math.random()*4));
 			u = p.getHero(i);
 		}
-		int damage = unit.get(place).play(u, move);
-		String text = unit.get(place).getName()+" defended";
-		if(move.equals("attack"))text = ((Enemy)unit.get(place)).getName()+" deals "+damage+" damage to "+p.getHero(i).getName();
+		enemy.add(unit.get(place));
+		//int damage = unit.get(place).play(u, move);
+		//String text = unit.get(place).getName()+" defended";
+		//if(move.equals("attack"))text = ((Enemy)unit.get(place)).getName()+" deals "+damage+" damage to "+p.getHero(i).getName();
+		//textes.add(text);
 		int index = unit.get(place).id();
 		enemies.add(index);
 		System.out.println(unit.get(place).id());
@@ -183,17 +188,20 @@ public CombatWorld cw;
 		if(place==unit.size())place=0;
 		while(unit.get(place).checkDead()){place++;
 		if(place==unit.size())place=0;}
-		if(unit.get(place) instanceof Enemy){text+=execute();}
+		if(unit.get(place) instanceof Enemy){execute();}
 		else {cw.getGrid().remove(BattleGrid.playerLoc[unit.get(place).id()]);cw.getGrid().put(BattleGrid.playerActiveLoc[unit.get(place).id()], new Actor());}
 		if(index == enemies.get(0))
 		{
 		System.out.println(enemies);
-		cw.add(new Location(0,0),new DisplayController(cw,text,enemies));
+		cw.add(new Location(0,0),new DisplayController(cw,enemies,enemy,targets,moves));
 		enemies.clear();
+		moves.clear();
+		textes.clear();
+		enemy.clear();
+		targets.clear();
 		}
 		}
 		//System.out.println(text);
-		return "\n"+text;
 	}
 	public PlayerGroup getPlayers() {
 		return p;

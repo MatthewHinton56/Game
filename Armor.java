@@ -1,3 +1,4 @@
+
 /**
  * @(#)Armor.java
  *
@@ -37,7 +38,7 @@ private String name,type;
 	@Override
 	public String getStat() {
 		// TODO Auto-generated method stub
-		return name+"\nType: "+type+" HP: "+HP+" Defense: "+defense;
+		return name+" "+" HP: "+HP+" Defense: "+defense;
 	}
 	@Override
 	public String getType() {
@@ -47,6 +48,14 @@ private String name,type;
 	public Object clone()
 	{
 		return new Armor(HP,defense,price,name,type);
+	}
+	public String toString()
+	{
+		return "Name:" + name+" Type:"+type+" Price:"+price;
+	}
+	public String save()
+	{
+		return type + " "+ HP+" "+defense+" "+price+" "+name;
 	}
     
 }

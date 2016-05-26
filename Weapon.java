@@ -1,4 +1,5 @@
 
+
 public class Weapon implements Inventoriable{
 private int damage,price;
 private String name;
@@ -15,7 +16,7 @@ public int getPrice() {
 	return price;
 }
 public String getStat() {
-	return "Type "+type+" Damage: "+damage;
+	return name+ " Damage: "+damage;
 }
 public String getType() {
 	return type;
@@ -23,5 +24,13 @@ public String getType() {
 public Object clone()
 {
 	return new Weapon(damage,name,price);
+}
+public String toString()
+{
+	return "Name:" + name+" Type:"+type+" Price:"+price;
+}
+public String save()
+{
+	return type+" "+damage+" "+name+" "+price;
 }
 }

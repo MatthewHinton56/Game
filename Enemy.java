@@ -61,14 +61,17 @@ private String name;
 		return defense/2;
 	}
 
-	public void play(Units u, String s) {
+	public int play(Units u, String s) {
 		if(!this.checkDead())
 		{
 		switch (s){
 		case "attack":if(!u.checkDead()) u.takeDamage(this.getDamage()-u.getDefend());
+		return this.getDamage()-u.getDefend();
 		case "defend": this.setDefense(this.defend());
+		return 0;
 		}
 		}
+		return 0;
 	}
 
 

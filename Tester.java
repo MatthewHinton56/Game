@@ -1,4 +1,8 @@
 
+import info.gridworld.actor.*;
+import info.gridworld.grid.BoundedGrid;
+import info.gridworld.grid.Location;
+import info.gridworld.actor.ActorWorld;
 public class Tester {
 
 	public static void main(String[] args) {
@@ -11,15 +15,21 @@ public class Tester {
 		Hero unit4 = new WhiteMage("Matthew",3);
 		//System.out.println(unit4.getName()+" "+unit4.getType());
 		PlayerGroup p = new PlayerGroup();
-		/*p.addHero(unit1);
+		p.addHero(unit1);
 		p.addHero(unit2);
 		p.addHero(unit3);
 		p.addHero(unit4);
-		Combat simulator =  new Combat(StandardEnemies.goblins2,p);
-		simulator.execute();*/
+		//simulator.execute();
 		Inventory inventory = new Inventory();
 		inventory.addItem(StandardItems.loinclothC);
-		System.out.println(inventory);
+		//new InnGui(9,inventory,p);
+		//new ShopGui(9,inventory);
+		//System.out.println(inventory);
+		//Combat simulator =  new Combat(StandardEnemies.goblins2,p, inventory);
+		//new DungeonWorld(1,p,inventory);
+		//world.add(new Location(1,2) new Actor());
+		new GameMaster();
+		
 	}
 
 }

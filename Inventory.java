@@ -1,3 +1,4 @@
+
 import java.util.*;
 public class Inventory {
 private ArrayList<Inventoriable> inventory;
@@ -5,6 +6,13 @@ private int gold;
 	public Inventory() {
 		inventory =  new ArrayList<Inventoriable>();
 		gold = 0;
+	}
+	public String save()
+	{
+		String temp = ""+gold+"\n";
+		temp+=inventory.size();
+		for(Inventoriable i:inventory){temp+="\n"+i.save();}
+		return temp;
 	}
 	public void addGold(int gold)
 	{
@@ -22,6 +30,10 @@ private int gold;
 	public void addItem(Inventoriable i)
 	{
 		inventory.add(i);
+	}
+	public void removeItem(Inventoriable i)
+	{
+		 inventory.remove(i);
 	}
 	public Inventoriable getItem(String name,String type)
 	{
@@ -97,4 +109,5 @@ private int gold;
 		for(Inventoriable i: inventory)ret+=i.getStat();
 		return ret;
 	}
+	public int getInventorySize(){return inventory.size();}
 }

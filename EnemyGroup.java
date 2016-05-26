@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 public class EnemyGroup {
@@ -40,4 +41,5 @@ private ArrayList<Enemy> enemies;
 		return eG;
 	}
 	public int size(){return enemies.size();}
+	public Enemy get(int i){return enemies.get(i);}
 }

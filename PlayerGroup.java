@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 public class PlayerGroup {
@@ -24,5 +25,9 @@ private ArrayList<Hero> heroes;
 	{
 		for(Hero h:heroes)if(h.id()==id)return h;
 		return null;
+	}
+	public void clear()
+	{
+		heroes.clear();
 	}
 }
